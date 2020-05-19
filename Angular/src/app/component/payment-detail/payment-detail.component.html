@@ -1,0 +1,74 @@
+<div >
+  <h3 class="display-4 text-center">Payment Detail Register</h3>
+  <hr>
+  <div class="row">
+    <div class="col-md-5">
+      <form #form="ngForm" autocomplete="off" (ngSubmit)="saveInput()">
+        <input type="hidden" name="PMId" [value]="inputModel.paymentId">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text bg-white">
+                <i class="fas fa-user-circle" [class.green-icon]="CardOwnerName.valid" [class.red-icon]="CardOwnerName.invalid && CardOwnerName.touched"></i>
+              </div>
+            </div>
+            <input name="CardOwnerName" #CardOwnerName="ngModel" [(ngModel)]="inputModel.cardOwnerName" class="form-control"
+              placeholder="Card Owner Name" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text bg-white">
+                <i class="far fa-credit-card"  [class.green-icon]="CardNumber.valid" [class.red-icon]="CardNumber.invalid && CardNumber.touched"></i>
+              </div>
+            </div>
+            <input name="CardNumber" #CardNumber="ngModel" [(ngModel)]="inputModel.cardNumber" 
+            class="form-control" placeholder="16 Digit Card Number" required maxlength="16" minlength="16">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-7">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text bg-white">
+                  <i class="fas fa-calendar-alt"  [class.green-icon]="ExpirationDate.valid" [class.red-icon]="ExpirationDate.invalid && ExpirationDate.touched"></i>
+                </div>
+              </div>
+              <input name="ExpirationDate" #ExpirationDate="ngModel" [(ngModel)]="inputModel.expirationDate" class="form-control"
+                placeholder="MM/YY" required maxlength="5" minlength="5">
+            </div>
+          </div>
+          <div class="form-group col-md-5">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text bg-white">
+                  <i class="fas fa-key"  [class.green-icon]="CVV.valid" [class.red-icon]="CVV.invalid && CVV.touched"></i>
+                </div>
+              </div>
+              <input type="password" name="CVV" #CVV="ngModel" [(ngModel)]="inputModel.cVV" class="form-control" placeholder="CVV"
+              required  maxlength="3" minlength="3">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-success btn-lg btn-block" type="submit" [disabled]="form.invalid"><i class="fas fa-database"></i> Submit</button>
+        </div>
+      </form>
+    
+    </div>
+    <div class="col-md-7">
+      <table class="table table-hover">
+        <tr *ngFor="let pd of paymentDetails">
+            <td>{{pd.cardOwnerName}}</td>
+            <td>{{pd.cardNumber}}</td>
+            <td>{{pd.expirationDate}}</td>
+        </tr>
+    </table>
+    </div>
+  </div>
+</div>
+
+
+
+ 
