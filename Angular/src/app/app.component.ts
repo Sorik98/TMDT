@@ -6,6 +6,7 @@ import { AppConsts } from '@shared/const/AppConst';
 const authConfig: AuthConfig = {
   issuer: AppConsts.identityServerUrl,
   redirectUri: AppConsts.baseUrl,
+  postLogoutRedirectUri: AppConsts.baseUrl,
   clientId: "spa",
   scope: 'openid profile email address phone coreapi',
   showDebugInformation: true,
@@ -25,15 +26,12 @@ export class AppComponent {
   constructor(private oauthService: OAuthService) {
     this.oauthService.configure(authConfig);
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
-    this.oauthService.loadDiscoveryDocumentAndTryLogin();
-    // this.oauthService.loadDiscoveryDocument().then(() => {
+    //this.oauthService.loadDiscoveryDocumentAndTryLogin();
+    // 0. LOAD CONFIG:
+    // First we have to check to see how the IdServer is
+    // currently configured:
+    this.oauthService.loadDiscoveryDocument().then(() => this.oauthService.tryLoginCodeFlow());
 
-    //     // This method just tries to parse the token(s) within the url when
-    //     // the auth-server redirects the user back to the web-app
-    //     // It dosn't send the user the the login page
-    //     this.oauthService.tryLoginImplicitFlow({});
-    //   });
-  
     //this.oauthService.setupAutomaticSilentRefresh();
     // // URL of the SPA to redirect the user to after login
     // this.oauthService.redirectUri = window.location.origin + "/index.html";

@@ -10,7 +10,7 @@ import * as ApiServiceProxies from "../shared/service-proxies/service-proxies";
 import { PaymentDetailComponent } from './component/payment-detail/payment-detail.component';
 
 import { DashboardComponent } from './component/dashboard/dashboard.component';
-import { OAuthModule } from 'angular-oauth2-oidc';
+import { OAuthModule, MemoryStorage, OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import { TokenInterceptor } from '@shared/helpers/http-handle/TokenInterceptor';
 import { API_BASE_URL } from '@shared/service-proxies/service-proxies';
 import { AppConsts } from '@shared/const/AppConst';
@@ -34,6 +34,8 @@ export function getRemoteServiceBaseUrl(): string {
     OAuthModule.forRoot()
   ],
   providers: [
+    OAuthService,
+    { provide: OAuthStorage, useValue: localStorage },
     //Thong tin hoa don
     ApiServiceProxies.PaymentDetailServiceProxy,
    { provide: API_BASE_URL, useFactory: getRemoteServiceBaseUrl },

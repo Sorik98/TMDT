@@ -16,14 +16,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     console.log(this);
     this.iniUserWithTokens();
-    this.oauthService.events.subscribe(event => {
-      var ev: EventType = "token_received";
-      if (event.type == ev) {
-        this.iniUserWithTokens();
-      } else {
-        console.warn(event);
-      }
-    });
+    this.addOAuthServiceEventObservable();
   }
   login() {
     this.oauthService.initCodeFlow();
@@ -33,10 +26,10 @@ export class HeaderComponent implements OnInit {
   logout() {
         this.oauthService.logOut();
     }
-  tokensIsValid(){
+  private tokensIsValid(){
     return (this.oauthService.hasValidIdToken() && this.oauthService.hasValidAccessToken());
   }
-  iniUserWithTokens(){
+  private iniUserWithTokens(){
     if(!this.tokensIsValid())return;
     let tokenDecode: any;
     tokenDecode = jwtDecode(this.oauthService.getIdToken())
@@ -48,6 +41,22 @@ export class HeaderComponent implements OnInit {
     this.user.id = tokenDecode.sub;
     tokenDecode = jwtDecode(this.oauthService.getAccessToken())
     this.user.role = tokenDecode.role;
+  }
+  private addOAuthServiceEventObservable()
+  {
+    this.oauthService.events.subscribe(event => {
+      switch(event.type)
+      {
+        case "token_received":
+          this.iniUserWithTokens();
+          break;
+        case "token_expires":
+          this.logout();
+          break;
+        default:
+          console.warn(event);
+      }
+    });
   }
 
   //  Role(){

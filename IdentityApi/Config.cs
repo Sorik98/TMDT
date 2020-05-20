@@ -59,8 +59,7 @@ namespace IdentityApi
                      RedirectUris = { "http://localhost:4200" },
 
                     // // where to redirect to after logout
-                    // PostLogoutRedirectUris = { "http://localhost:5001/connect/endsession" },
-
+                     PostLogoutRedirectUris = { "http://localhost:4200" },
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
@@ -74,7 +73,7 @@ namespace IdentityApi
                     //Access token life time in seconds
                     AccessTokenLifetime = 1800,
                     IdentityTokenLifetime = 1800,
-                    //AllowOfflineAccess = false
+                    AllowOfflineAccess = false
                 }
             };
         

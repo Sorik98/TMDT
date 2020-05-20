@@ -46,7 +46,6 @@ namespace IdentityApi
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
             // var builder = services.AddIdentityServer(options =>{
             //     options.Authentication.CookieLifetime = TimeSpan.FromSeconds(60);
             //     options.Authentication.CookieSlidingExpiration = false;
@@ -56,7 +55,12 @@ namespace IdentityApi
                 .AddInMemoryApiResources(Config.Apis)
                 .AddInMemoryClients(Config.Clients)
                 .AddAspNetIdentity<ApplicationUser>();
-                //.AddTestUsers(TestUsers.Users);
+                
+            // services.AddAuthentication("MyCookie")
+            //     .AddCookie("MyCookie", options =>
+            //     {
+            //         options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+            //     });
 
             // builder.Services.ConfigureExternalCookie(options => {
             //         options.Cookie.IsEssential = true;
