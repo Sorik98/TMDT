@@ -15,7 +15,6 @@ using WebApi.Infrastructure.Mapping;
 namespace WebApi.Controllers
 {
     [Route("api/[controller]/[action]")]
-    [Authorize(Roles = "Admin")]
     [ApiController]
     public class PaymentDetailController : ControllerBase
     {
@@ -80,7 +79,7 @@ namespace WebApi.Controllers
             }
             return payments_result;
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Create(PaymentDetailDTO paymentDTO)
         {

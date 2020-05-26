@@ -56,10 +56,10 @@ namespace IdentityApi
                     RequirePkce = true,
 
                     // // where to redirect to after login
-                     RedirectUris = { "http://localhost:4200" },
+                     RedirectUris = { "http://localhost:4200/home" },
 
                     // // where to redirect to after logout
-                     PostLogoutRedirectUris = { "http://localhost:4200" },
+                     PostLogoutRedirectUris = { "http://localhost:4200/home" },
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,

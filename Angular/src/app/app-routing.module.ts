@@ -1,14 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './component/dashboard/dashboard.component';
-import { PaymentDetailComponent } from './component/payment-detail/payment-detail.component';
+
+
+
 
     const routes: Routes = [
-        { path: '', component: DashboardComponent },
-        { path: 'payment-detail', component: PaymentDetailComponent },
-    ];
+        //lazy loading
+        {
+            path: 'admin',
+            loadChildren: () => import('./component/admin/admin.module').then(m => m.AdminModule)
+        },
+        {
+            path: '',
+            loadChildren: () => import('./component/client/client.module').then(m => m.ClientModule)
+        },
+];
 
-    @NgModule({
+    @NgModule({  
         imports: [
             RouterModule.forRoot(routes)
         ],

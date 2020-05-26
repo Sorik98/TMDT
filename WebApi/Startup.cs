@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 using WebApi.Database.Context;
 using WebApi.Infrastructure.Interfaces;
 using WebApi.Infrastructure.Models;
@@ -32,12 +33,12 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-             services.AddControllers()
-                     .AddJsonOptions(options =>
-                        {
-                            options.JsonSerializerOptions.PropertyNamingPolicy = null;
-                            options.JsonSerializerOptions.DictionaryKeyPolicy = null;
-                        });
+            services.AddControllers()
+                    .AddJsonOptions(options =>
+                       {
+                           options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                           options.JsonSerializerOptions.DictionaryKeyPolicy = null;
+                       });
             ConfigureScoped(services);
             services.AddCors();
             services.AddAuthentication("Bearer")
@@ -61,11 +62,24 @@ namespace WebApi
             new IdentityBuilder(typeof(ApplicationUser), services)
                 .AddSignInManager<SignInManager<ApplicationUser>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Order API", Version = "v1" });
+
+                /* #region  old authorize swagger ui */
+                // c.AddSecurityDefinition("oauth2", new ApiKeyScheme
+                // {
+                //     Description = "Standard Authorization header using the Bearer scheme. Example: \"bearer {token}\"",
+                //     In = "header",
+                //     Name = "Authorization",
+                //     Type = "apiKey"
+                // });
+
+                // c.OperationFilter<SecurityRequirementsOperationFilter>();
+                /* #endregion */
                 
+                /* #region  new authorize swagger ui */
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description =
@@ -75,7 +89,6 @@ namespace WebApi
                     Type = SecuritySchemeType.ApiKey,
                     Scheme = "Bearer"
                 });
-
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement()
                 {
                     {
@@ -94,6 +107,8 @@ namespace WebApi
                         new List<string>()
                     }
                 });
+                /* #endregion */
+
             });
         }
 
@@ -109,7 +124,7 @@ namespace WebApi
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Order API V1");
                     c.RoutePrefix = string.Empty;
-                    
+
                 });
             //app.UseHttpsRedirection();
 

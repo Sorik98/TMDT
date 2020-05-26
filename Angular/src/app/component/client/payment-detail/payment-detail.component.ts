@@ -1,15 +1,16 @@
 import { PaymentDetailServiceProxy,PaymentDetailDTO } from '@shared/service-proxies/service-proxies';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
-  selector: 'payment-detail',
   templateUrl: './payment-detail.component.html',
   styles: []
 })
 export class PaymentDetailComponent implements OnInit {
 
-  constructor(private paymentDetailService: PaymentDetailServiceProxy) { }
+  constructor(private paymentDetailService: PaymentDetailServiceProxy,
+              private notifierService: NotifierService) { }
   
   inputModel: PaymentDetailDTO;
   paymentDetails: PaymentDetailDTO[];
@@ -42,11 +43,21 @@ export class PaymentDetailComponent implements OnInit {
         this.resetForm();
         this.refreshList();
       },
-      err => { console.log(err); }
+      err => { 
+        this.notifierService.notify(
+          "error",
+          "Error: An unexpected server error occurred",
+          "error_message"
+      );
+        setTimeout(()=>{
+          this.notifierService.hide("error_message");
+        },10000)
+      }
     )
   }
   refreshList(){
     this.paymentDetailService.getAll().subscribe(res => {
+     // console.log(res);
       this.paymentDetails = res;
     })
   }
