@@ -10,8 +10,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(private userService: UserService) { }
   user:any = {};
-  count = 0;
-  count2 = 0;
+
  // userClaim: any;
  name:string = "sdsd";
   ngOnInit(): void {
@@ -26,11 +25,11 @@ export class HeaderComponent implements OnInit {
       this.userService.logout();
     }
   get userName(){
-    console.log(++this.count);
+  
     return this.userService.Name;
   }
   isLogin(){
-    console.log(++this.count2);
+  
     return this.userService.isLogin();
   }
 }

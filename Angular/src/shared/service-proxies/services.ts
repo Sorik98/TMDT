@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 import { User } from '@shared/model/User';
 import { OAuthService } from 'angular-oauth2-oidc';
 import * as jwtDecode from "jwt-decode";
-import { authConfig } from '@shared/const/AppConst';
+import { authConfig, RoleConst } from '@shared/const/AppConst';
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 @Injectable()
 export class UserService {
@@ -38,6 +38,9 @@ export class UserService {
         this.oauthService.logOut();
     }
 
+    hasAdminAccessPermission(){
+        return this.user.role != RoleConst.customer;
+    }
     /* #endregion */
 
 

@@ -14,5 +14,10 @@ export class AppConsts {
     scope: 'openid profile email address phone coreapi',
     showDebugInformation: true,
     responseType: 'code',
-  
+
+  }
+  export class RoleConst{
+    static admin = "Admin";
+    static manager = "Manager";
+    static customer = "Customer";
   }

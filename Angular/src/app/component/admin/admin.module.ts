@@ -5,10 +5,11 @@ import { FormsModule }    from '@angular/forms';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import * as ApiServiceProxies  from'@shared/service-proxies/service-proxies'
+import { ChoCamComponent } from './cho-cam/cho-cam.component';
 
 @NgModule({
   declarations: [
-    
+    ChoCamComponent
   ],
   imports: [
     CommonModule,
