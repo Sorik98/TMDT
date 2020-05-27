@@ -1,7 +1,7 @@
 # TMDT
 e-commerce website project
 
-<Requirement>
+#Requirement
   
 Node.js
 
@@ -13,7 +13,7 @@ Angular/cli
 
 netcoreapp 3.1
 
-<How to run project>
+#How to run project
   
 1.Clone it
 
