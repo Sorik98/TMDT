@@ -1,14 +1,31 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ChoCamComponent } from './cho-cam/cho-cam.component';
+import { ProductComponent } from './product/product.component';
 import { AdminGuard } from '@shared/guard/AdminGuard';
+import { AdminComponent } from './admin.component';
+import { EditPageState } from '@shared/const/AppConst';
+import { ProductEditComponent } from './product/product-edit.component';
 
 
 
     const adminRoutes: Routes = [
-        {path: '',component:ChoCamComponent, canActivate: [AdminGuard]}
-        // { path: 'payment-detail', component: PaymentDetailComponent },
-        // { path: 'home', component: HomeComponent }, 
+        {
+        path: '',
+        component: AdminComponent,
+        canActivate: [AdminGuard],
+        children: [
+            // Sản phẩm
+            { path: 'product', component: ProductComponent },
+            { path: 'product-add', component: ProductEditComponent, data: {editPageState: EditPageState.add} },
+            { path: 'product-edit', component: ProductEditComponent, data: {editPageState: EditPageState.add} },
+            { path: 'product-view', component: ProductEditComponent, data: {editPageState: EditPageState.add} },
+
+
+
+            { path: '', redirectTo: 'product', pathMatch: 'full' },
+            // { path: '**', component: PageNotFoundComponent },  // Wildcard route for a 404 page
+        ]
+        }
     ];
 
     @NgModule({

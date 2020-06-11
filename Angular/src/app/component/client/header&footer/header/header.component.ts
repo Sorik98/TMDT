@@ -14,7 +14,6 @@ export class HeaderComponent implements OnInit {
  // userClaim: any;
  name:string = "sdsd";
   ngOnInit(): void {
-    console.log(this);
   }
   login() {
     this.userService.login();

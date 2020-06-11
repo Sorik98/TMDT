@@ -15,8 +15,6 @@ export class AppComponent implements OnInit {
               private userService: UserService,
               ) { }
   ngOnInit() {
-    console.log(this);
-
   }
   
 }

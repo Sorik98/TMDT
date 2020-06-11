@@ -7,8 +7,8 @@ namespace WebApi.Infrastructure.Interfaces
     {
         Task<IEnumerable<T>> GetAll();
         Task<T> GetBy(int id);
-        Task<T> Add(T entity);
+        Task<int> Create(T entity);
         Task Update(T entity);
-        Task Delete(T entity);
+        Task Delete(int id);
     }
 }

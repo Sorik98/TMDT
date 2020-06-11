@@ -4,9 +4,9 @@ using IdentityApi.Models;
 
 namespace IdentityApi.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class AppIdentityDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options)
             : base(options)
         {
         }

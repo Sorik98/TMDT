@@ -41,10 +41,10 @@ namespace IdentityApi
             //     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
             //     options.Cookie.IsEssential = true;
             // });
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<AppIdentityDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddEntityFrameworkStores<AppIdentityDbContext>()
                 .AddDefaultTokenProviders();
             // var builder = services.AddIdentityServer(options =>{
             //     options.Authentication.CookieLifetime = TimeSpan.FromSeconds(60);

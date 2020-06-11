@@ -1,10 +1,11 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable, OnInit, ElementRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { User } from '@shared/model/User';
 import { OAuthService } from 'angular-oauth2-oidc';
 import * as jwtDecode from "jwt-decode";
 import { authConfig, RoleConst } from '@shared/const/AppConst';
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
+import { MatSidenav } from '@angular/material/sidenav';
 @Injectable()
 export class UserService {
 
@@ -24,7 +25,9 @@ export class UserService {
         return this.user.name;
     }
     /* #region  public methods */
-    
+    get Role(){
+        return this.user.role;
+    }
     isLogin(){
         return this.login_;
     }
@@ -129,4 +132,74 @@ export class OAuthConfigService{
     //});
     /* #endregion */
     }
+}
+
+@Injectable()
+export class SidenavService {
+    private sidenav: MatSidenav;
+
+    public setSidenav(sidenav: MatSidenav) {
+        this.sidenav = sidenav;
+    }
+
+    public open() {
+        return this.sidenav.open();
+    }
+
+
+    public close() {
+        return this.sidenav.close();
+    }
+
+    public toggle(): void {
+    this.sidenav.toggle();
+   }
+   public get opened(){
+       return this.sidenav.opened;
+   }
+}
+
+@Injectable()
+export class NotifierService{
+
+  private readonly notifierOptions = {
+    none: 0,
+    notifierSuccess: 1,
+    notifierWarning: 2,
+    notifierDanger: 3,
+  }
+  private current = this.notifierOptions.none;
+  private notifierSuccess: ElementRef;
+  private notifierWarning: ElementRef;
+  private notifierDanger: ElementRef;
+
+  public setNotifier( notifierSuccess: ElementRef,notifierWarning: ElementRef,notifierDanger: ElementRef){
+
+        this.notifierSuccess = notifierSuccess;
+        this.notifierWarning = notifierWarning;
+        this.notifierDanger = notifierDanger;
+  }
+  public alert(type: string, message: string){
+    this.clearNotifier();
+      switch(type)
+      {
+          case "success":
+            this.notifierSuccess.nativeElement.hidden = false;
+            this.notifierSuccess.nativeElement.children[1].innerText = message;
+            break;
+          case "warning":
+            this.notifierWarning.nativeElement.hidden = false;
+            this.notifierWarning.nativeElement.children[1].innerText = message;
+            break;
+          case "danger":
+            this.notifierDanger.nativeElement.hidden = false;
+            this.notifierDanger.nativeElement.children[1].innerText = message;
+            break;
+      }
+  }
+  public clearNotifier(){
+    this.notifierSuccess.nativeElement.hidden = true;
+    this.notifierWarning.nativeElement.hidden = true;
+    this.notifierDanger.nativeElement.hidden = true;
+  }
 }

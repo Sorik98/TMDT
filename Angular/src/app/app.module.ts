@@ -9,6 +9,7 @@ import { TokenInterceptor } from '@shared/helpers/http-handle/TokenInterceptor';
 import { API_BASE_URL } from '@shared/service-proxies/service-proxies';
 import { AppConsts } from '@shared/const/AppConst';
 import { UserService, OAuthConfigService } from '@shared/service-proxies/services';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 export function getRemoteServiceBaseUrl(): string {
   return AppConsts.remoteServiceBaseUrl;
 }
@@ -22,6 +23,7 @@ export function getRemoteServiceBaseUrl(): string {
     FormsModule,
     AppRoutingModule,
     OAuthModule.forRoot(),
+    BrowserAnimationsModule,
   ],
   providers: [
     //Oauth config

@@ -4,9 +4,9 @@ using WebApi.Infrastructure.Models;
 
 namespace WebApi.Database.Context
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class AppIdentityDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options)
             : base(options)
         {
         }

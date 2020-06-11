@@ -8,17 +8,19 @@ using WebApi.Infrastructure.Models;
 
 namespace WebApi.Database.Context
 {
-    public class PaymentDetailContext : DbContext
+    public class AppDbContext : DbContext
     {
-        public PaymentDetailContext(DbContextOptions<PaymentDetailContext> options) : base(options)
-        { }
-
         public DbSet<PaymentDetail> PaymentDetails { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ImageUrl> ImageUrls {get; set; }
+        public DbSet<Producer> Producers{ get;set; }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        { }
         protected override void OnModelCreating(ModelBuilder builder) 
         {
             base.OnModelCreating(builder);
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
-
+        
     }
 }

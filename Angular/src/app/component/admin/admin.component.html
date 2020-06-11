@@ -1,0 +1,34 @@
+<mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" opened><side-nav></side-nav></mat-sidenav>
+    <mat-sidenav-content>
+    <div class="container-fluid">
+        <div class="row">
+        <div *ngIf="!sidenav.opened">
+            <button mat-icon-button color="primary" class="custom-icon-button" style="margin-top: 20px;opacity: 65%;"  (click)="toggleSidenav()"><mat-icon>logout</mat-icon></button>
+        </div>
+        <div class="col">
+            <div #notifierSuccess [hidden]="true">
+                <span class="badge badge-pill badge-success">Success</span>
+                <div class="alert alert-success">
+                    This is a primary alert—check it out!
+                </div>
+            </div>
+            <div #notifierWarning [hidden]="true">
+                <span class="badge badge-pill badge-warning">Warning</span>
+                <div class="alert alert-warning">
+                    This is a primary warning it out!
+                </div>
+            </div>
+            <div #notifierDanger [hidden]="true">
+                <span class="badge badge-pill badge-danger">Danger</span>
+                <div class="alert alert-danger">
+                    This is a primary danger it out!
+                </div>
+            </div>
+            <router-outlet></router-outlet>
+        </div>
+        </div>
+    </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+  

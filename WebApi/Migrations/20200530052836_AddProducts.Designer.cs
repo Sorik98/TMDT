@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Database.Context;
 
-namespace WebApi.Database.Migrations
+namespace WebApi.Migrations
 {
-    [DbContext(typeof(PaymentDetailContext))]
-    [Migration("20200516161812_UpdateAll")]
-    partial class UpdateAll
+    [DbContext(typeof(AppDbContext))]
+    [Migration("20200530052836_AddProducts")]
+    partial class AddProducts
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,6 +46,49 @@ namespace WebApi.Database.Migrations
                     b.HasKey("PaymentId");
 
                     b.ToTable("PaymentDetails");
+                });
+
+            modelBuilder.Entity("WebApi.Infrastructure.Models.Product", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ApprovedDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("AuthStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("Describe")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("varchar(32)");
+
+                    b.Property<string>("Manufactory")
+                        .IsRequired()
+                        .HasColumnType("varchar(32)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,0)");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("varchar(16)");
+
+                    b.HasKey("ProductId");
+
+                    b.ToTable("Products");
                 });
 #pragma warning restore 612, 618
         }

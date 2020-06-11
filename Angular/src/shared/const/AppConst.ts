@@ -21,3 +21,9 @@ export class AppConsts {
     static manager = "Manager";
     static customer = "Customer";
   }
+
+  export enum EditPageState{
+    add = "Add",
+    edit = "Edit",
+    viewDetail = "ViewDetail",
+}

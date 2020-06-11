@@ -1,0 +1,89 @@
+<div class="container">
+  <div></div>
+  <div class="col-md-12">
+    <div class="col-md-4"><h1>Danh sách sản phẩm</h1></div>
+  </div>
+  <div class="col-md-12 text-right">
+    <button mat-raised-button color="primary" (click)="alert('success','you just pressed Success button')">Success</button>
+    <button mat-raised-button color="primary" (click)="alert('warning','you just pressed Warning button')">Warning</button>
+    <button mat-raised-button color="primary" (click)="alert('danger','you just pressed Danger button')">Danger</button>
+    <button mat-raised-button color="primary" (click)="onAdd()"><mat-icon>add</mat-icon></button>
+  </div>
+  <br>
+  <div class="col-xl-12">
+  <table mat-table [dataSource]="dataSource" class="custom-table">
+    <ng-container matColumnDef="name" >
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let product"><div style="width: 350px"> {{product.name}} </div></td>
+    </ng-container>
+    <ng-container  matColumnDef="image">
+      <th mat-header-cell *matHeaderCellDef > Image </th>
+      <td mat-cell *matCellDef="let product"><img src="{{product.imageUrls[0].url}}" alt="{{product.name}}"> </td>
+    </ng-container>
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef > Price </th>
+      <td mat-cell *matCellDef="let product"><div style="width: 80px"> {{product.price | moneyFormatPipe}} </div></td>
+    </ng-container>
+    <ng-container matColumnDef="desc">
+      <th mat-header-cell *matHeaderCellDef > Description </th>
+      <td mat-cell *matCellDef="let product"><div style="width: 200px;"> {{product.desc}} </div></td>
+    </ng-container>
+    <ng-container matColumnDef="producer-name">
+      <th mat-header-cell *matHeaderCellDef > Producer Name </th>
+      <td mat-cell *matCellDef="let product"><div style="width: 150px"> {{product.producerName}} </div></td>
+    </ng-container>
+    <ng-container matColumnDef="auth-status">
+      <th mat-header-cell *matHeaderCellDef > Auth Status </th>
+      <td mat-cell *matCellDef="let product"><div style="width: 100px"> {{product.authStatus}} </div></td>
+    </ng-container>
+    <ng-container matColumnDef="create-date">
+      <th mat-header-cell *matHeaderCellDef> Create Date </th>
+      <td mat-cell *matCellDef="let product"><div style="width: 180px"> {{product.createDate | dateTimeFormatPipe}} </div></td>
+    </ng-container>
+    <ng-container matColumnDef="create-by">
+      <th mat-header-cell *matHeaderCellDef > Create By </th>
+      <td mat-cell *matCellDef="let product"><div style="width: 200px"> {{product.createBy}} </div></td>
+    </ng-container>
+    <ng-container matColumnDef="auth-date">
+      <th mat-header-cell *matHeaderCellDef> Auth Date </th>
+    <td mat-cell *matCellDef="let product"><div style="width: 180px"> 05/06/2020, 10:10:18 pm </div></td>
+    </ng-container>
+    <ng-container matColumnDef="auth-by">
+      <th mat-header-cell *matHeaderCellDef> Auth By </th>
+      <td mat-cell *matCellDef="let product" ><div style="width: 200px"> {{product.authBy}} </div></td>
+    </ng-container>
+    <ng-container matColumnDef="last-update-date">
+      <th mat-header-cell *matHeaderCellDef > Last Update Date </th>
+      <td mat-cell *matCellDef="let product"><div style="width: 180px"> {{product.lastUpdateDate | dateTimeFormatPipe}} </div></td>
+    </ng-container>
+    <ng-container matColumnDef="last-update-by">
+      <th mat-header-cell *matHeaderCellDef > Last Update By </th>
+      <td mat-cell *matCellDef="let product"><div style="width: 200px"> {{product.lastUpdateBy}} </div></td>
+    </ng-container>
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef > Action </th>
+      <td mat-cell *matCellDef="let product">
+        <div>
+            <button mat-fab color="primary" matTooltip="View item details" [matTooltipPosition]="toolTip.position" 
+            [matTooltipShowDelay]="toolTip.showDelay" [matTooltipHideDelay]="toolTip.hideDelay">
+              <mat-icon>visibility</mat-icon>
+            </button>
+    
+            <button mat-fab color="primary" matTooltip="Edit this item" [matTooltipPosition]="toolTip.position" 
+            [matTooltipShowDelay]="toolTip.showDelay" [matTooltipHideDelay]="toolTip.hideDelay">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-fab color="primary" *ngIf="isAdmin()" matTooltip="Delete this item" [matTooltipPosition]="toolTip.position" 
+            [matTooltipShowDelay]="toolTip.showDelay" [matTooltipHideDelay]="toolTip.hideDelay">
+              <mat-icon>delete</mat-icon>
+            </button>
+        
+      </div>
+      </td>
+    </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="itemsPerPage" showFirstLastButtons></mat-paginator>
+</div>
+</div>

@@ -2,7 +2,7 @@ import { NgModule }       from '@angular/core';
 import { CommonModule }   from '@angular/common';
 import { FormsModule }    from '@angular/forms';
 
-import { PaymentDetailComponent } from './payment-detail/payment-detail.component';
+//import { PaymentDetailComponent } from './payment-detail/payment-detail.component';
 import { HomeComponent } from './home/home.component';
 import { ClientRoutingModule } from './client-routing.module';
 import * as ApiServiceProxies  from'@shared/service-proxies/service-proxies'
@@ -14,7 +14,7 @@ import { NotifierModule } from "angular-notifier";
 
 @NgModule({
   declarations: [
-    PaymentDetailComponent,
+    //PaymentDetailComponent,
     HomeComponent,
     HeaderComponent,
     FooterComponent,
@@ -30,7 +30,7 @@ import { NotifierModule } from "angular-notifier";
   providers: [
     /* #region  service-proxies */
     //Thong tin hoa don
-    ApiServiceProxies.PaymentDetailServiceProxy,
+    //ApiServiceProxies.PaymentDetailServiceProxy,
     /* #endregion */
     
   ]

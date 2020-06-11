@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IdentityApi.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(AppIdentityDbContext))]
     [Migration("20200515154750_AddAppUser")]
     partial class AddAppUser
     {

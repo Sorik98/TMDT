@@ -22,7 +22,6 @@ namespace WebApi.Controllers
         {
             _userManager = userManager;
         }
-
         
         [HttpGet]
         [Authorize(Roles = RoleConst.Admin)]

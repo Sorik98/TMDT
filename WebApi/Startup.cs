@@ -53,15 +53,15 @@ namespace WebApi
                 // ValidateLifetime = true,
             });
 
-            services.AddDbContext<PaymentDetailContext>(optionns =>
+            services.AddDbContext<AppDbContext>(optionns =>
                             optionns.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<AppIdentityDbContext>(options =>
                  options.UseSqlServer(Configuration.GetConnectionString("UserIdentity")));
 
             services.AddIdentityCore<ApplicationUser>(options => { });
             new IdentityBuilder(typeof(ApplicationUser), services)
                 .AddSignInManager<SignInManager<ApplicationUser>>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<AppIdentityDbContext>();
 
             services.AddSwaggerGen(c =>
             {
@@ -147,7 +147,8 @@ namespace WebApi
         }
         private static void ConfigureScoped(IServiceCollection services)
         {
-            services.AddScoped<IPaymentDetailRepository, PaymentDetailRepository>();
+          //  services.AddScoped<IPaymentDetailRepository, PaymentDetailRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
         }
     }
 }
