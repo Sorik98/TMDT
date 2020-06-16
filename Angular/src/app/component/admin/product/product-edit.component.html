@@ -1,67 +1,80 @@
-<div class="container-fluid">
-<div class="row">
-  <div class="col-auto">
-    <span (click)="goBack()" class="link-page">
-    <span>Danh sách sản phẩm</span>
+<div class="container-fluid page-body">
+<div class="row align-items-center">
+  <div class="col-md-12">
+    <span>
+    <button mat-button class="no-outline-button" color="primary" (click)="goBack()">Danh sách sản phẩm</button>
     </span>
-  </div>
-  <div class="col-auto"><mat-icon color="primary">navigate_next</mat-icon></div>
-    <div class="col-auto">
-    <span [ngSwitch]="editPageState">
+    <span >
+      <svg class="bi bi-chevron-compact-right" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M6.776 1.553a.5.5 0 0 1 .671.223l3 6a.5.5 0 0 1 0 .448l-3 6a.5.5 0 1 1-.894-.448L9.44 8 6.553 2.224a.5.5 0 0 1 .223-.671z"/>
+      </svg>
+    </span>
+    <span style="padding: 0 16px;" [ngSwitch]="editPageState">
       <span *ngSwitchCase="EditPageState.add">Thêm sản phẩm</span>
       <span *ngSwitchCase="EditPageState.edit">Chỉnh sửa sản phẩm</span>
       <span *ngSwitchCase="EditPageState.viewDetail">Chi tiết sản phẩm</span>
-      </span>
-    </div>
-</div>
-    <div class="row">
-
-      <div class="col-lg-3">
-        <h1 class="my-4">HHP</h1>
-        <div class="list-group">
-          <a href="#" class="list-group-item active">Laptop</a>
-          <a href="#" class="list-group-item">Keyboard</a>
-          <a href="#" class="list-group-item">Mouse</a>
-        </div>
-      </div>
+    </span>
+  </div>
+  <div class="col-md-12">
+  <custom-notifier></custom-notifier>
+  </div>
+  <div class="col text-right">
+    <button mat-raised-button color="primary" (click)="onSave()" *ngIf="!isView()">Save</button>
+    <button mat-raised-button color="primary" (click)="onApprove()" *ngIf="isView()" [disabled]="!isApprovable()">Approve</button>
+  </div>
+  </div>
       <!-- /.col-lg-3 -->
-
-      <div class="col-lg-9">
-
-        <div class="card mt-4">
-          <img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">
-          <div class="card-body">
-            <h3 class="card-title">Product Name</h3>
-            <h4>$24.99</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente dicta fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores, sint aperiam sequi pariatur praesentium animi perspiciatis molestias iure, ducimus!</p>
-            <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-            4.0 stars
+      <form>
+      <div class="row">
+          <div class="col-md-6">
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input  matInput placeholder="Product name" value="{{inputModel.name}}" [disabled]="isView()" >
+          </mat-form-field>    
+          </div> 
+          <div class="col-md-6"></div>
+          <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-10">
+                    <mat-form-field>
+                    <mat-label>Price</mat-label>
+                    <input class="money-input" matInput matInputCommified placeholder="Product price" value="{{inputModel.price}}" type="text" [disabled]="isView()" >
+                  </mat-form-field>    
+                </div>  
+                <div class="align-self-center">VNĐ</div> 
+              </div>
           </div>
+          
+          <div class = "col-md-3">
+          <mat-form-field>
+            <mat-label>Producer</mat-label>
+            <mat-select [(value)]="inputModel.producerId" [disabled]="isView()">
+              <mat-option *ngFor="let producer of producers" [value]="producer.producerId">{{producer.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
-        <!-- /.card -->
-
-        <div class="card card-outline-secondary my-4">
-          <div class="card-header">
-            Product Reviews
+        <div class = "col-md-3">
+          <mat-form-field>
+            <mat-label>Type</mat-label>
+            <mat-select [(value)]="inputModel.type" [disabled]="isView()">
+              <mat-option *ngFor="let key of getObjectKeys(ProductType)" [value]="ProductType[key]">{{ProductType[key]}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+      
           </div>
-          <div class="card-body">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-            <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-            <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-            <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-            <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-            <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-            <hr>
-            <a href="#" class="btn btn-success">Leave a Review</a>
-          </div>
-        </div>
-        <!-- /.card -->
-
-      </div>
-      <!-- /.col-lg-9 -->
-
+          <div class="col-md-12">
+          <mat-form-field>
+            <mat-label>Desciption</mat-label>
+            <textarea matInput  placeholder="Product description" value="{{inputModel.desc}}" [disabled]="isView()"  [matTextareaAutosize]="true" [matAutosizeMaxRows]="25" 
+                      [matAutosizeMinRows]="5"></textarea>
+          </mat-form-field>  
+          </div>  
+        <div class="col text-right">
+          <bwm-image-upload [disable]="isView()" (files)="onSelectFiles($event)" ></bwm-image-upload>
+        </div> 
     </div>
+        <!-- /.card -->
+    </form>
+      <!-- /.col-lg-9 -->
 
   </div>

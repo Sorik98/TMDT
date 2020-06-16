@@ -21,8 +21,9 @@ input.ng-valid{
 table tr:hover{
     cursor: pointer;
 } */
-body {
-    padding-top: 10px;
+.page-body {
+    padding-top: 10px;  
+    padding-bottom: 30px;
   }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -104,9 +105,30 @@ outline: darkgray solid 0.35px;
     overflow: hidden;
 }
 
-.link-page{
-    color: blue;
-    cursor: pointer;
-    width: fit-content;
-    height: fit-content;
+
+[class^='col-md-'] > mat-form-field{
+    width: 100%;
+}
+mat-label{
+    font-weight: 600;
+    font-size:  16px ;
+    margin-bottom: 5px;
+}
+.form-container{
+    margin-top: 30px
+}
+.app-page{
+    min-height: 50vh;
+}
+textarea.mat-input-element{
+    border: 1px solid #bfc2be6b;
+}
+.money-input{
+    text-align: right !important;
+}
+.money-input:focus{
+    text-align: left !important;
+}
+.no-outline-button:focus{
+    outline: none;
 }

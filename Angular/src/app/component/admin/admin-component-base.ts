@@ -1,24 +1,26 @@
-import { Injector, ViewChild, ElementRef } from '@angular/core';
-import { UserService, NotifierService } from '@shared/service-proxies/services';
+import { Injector, ViewChild, ElementRef, OnInit, AfterViewInit } from '@angular/core';
+import { UserService } from '@shared/service-proxies/services';
 
 
-import { RoleConst } from '@shared/const/AppConst';
+import { RoleConst, ProductType, AuthStatus } from '@shared/const/AppConst';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
+import { CustomNotifier } from '@shared/component/notifier/notifier.component';
+import { kMaxLength } from 'buffer';
+import { PromiseType } from 'protractor/built/plugins';
 
 
 
-export abstract class AdminComponentBase {
+export abstract class AdminComponentBase{
   protected  userService: UserService;
-  protected  notifierService: NotifierService;
+
   protected router: Router;
   protected activedRoute: ActivatedRoute;
-  
   constructor(injector: Injector){
                 this.userService = injector.get(UserService);
-                this.notifierService = injector.get(NotifierService);
                 this.router = injector.get(Router);
                 this.activedRoute = injector.get(ActivatedRoute);
-                console.log(this);
+
+                
   }
   itemsPerPage = [5,10,15];
   toolTip = {
@@ -26,35 +28,49 @@ export abstract class AdminComponentBase {
       showDelay: 2700,
       hideDelay: 300
   };
-  
-
+  saving = false;
+  AuthStatus = AuthStatus;
   get userName() {
       return this.userService.Name;
   }
+  @ViewChild(CustomNotifier) notifier: CustomNotifier;
+
 
   isAdmin()
   {
     return this.userService.Role == RoleConst.admin;
   }
   alert(type: string,message: string){
-    this.notifierService.alert(type,message);
+    this.notifier.alert(type,message);
   }
-  navigatePassParam(url: string,  deepParams: any) {
-    var urlArray = [url]
-      let navigationExtras: NavigationExtras = {
-          queryParams: deepParams,
-          skipLocationChange: true
-      }
-      this.router.navigate(urlArray, navigationExtras);
-      window.history.pushState('', '', url);
+  
+  objectToString(obj: Object,separator: string, callback: (key:string,value:any)=>string){
+    var str = []
+    for(var p in obj)
+    {
+      str.push(callback(p,obj[p]));
+    }
+    return str.join(separator);
+  }
+  navigatePassParam(url: string, params: any, deepParams: any, skipLocationChange: boolean = true) {
+    var array = [url];
+    if (params) {
+        array.push(params);
+        url += ';' + this.objectToString(params,"&&",(k,v)=> k+"="+v.toString());
+    }
+    this.router.navigate(array, { queryParams: deepParams, skipLocationChange: skipLocationChange });
+    window.history.pushState('', '', url);
   }
   getRouteData(key: string): any {
     return (this.activedRoute.data as any).value[key];
   } 
-    onGetFilter(filterInput) {
+  getRouteParam(key: string): any {
+    return (this.activedRoute.params as any).value[key];
+  }
+  onGetFilter(filterInput) {
 
     }
-
+  
     getFilterInputInRoute(getFilterInput): any {
         this.activedRoute.queryParams.subscribe(response => {
             var str = response['filterInput'];
@@ -71,5 +87,34 @@ export abstract class AdminComponentBase {
                 this.onGetFilter((this as any).filterInput);
             }
         });
+    }
+    getObjectKeys(data: any): Array<string> {
+      var keys = Object.keys(data);
+      
+      return keys;
+     }
+     toCamel(o) {
+      var newO, origKey, newKey, value
+      if (o instanceof Array) {
+        return o.map(function(value) {
+            if (typeof value === "object") {
+              value = this.toCamel(value)
+            }
+            return value
+        })
+      } else {
+        newO = {}
+        for (origKey in o) {
+          if (o.hasOwnProperty(origKey)) {
+            newKey = (origKey.charAt(0).toLowerCase() + origKey.slice(1) || origKey).toString()
+            value = o[origKey]
+            if (value instanceof Array || (value !== null && value.constructor === Object)) {
+              value = this.toCamel(value)
+            }
+            newO[newKey] = value
+          }
+        }
+      }
+      return newO
     }
 }

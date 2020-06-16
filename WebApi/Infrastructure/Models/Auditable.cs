@@ -4,8 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApi.Infrastructure.Models{
 public class Auditable{
+
         [Required]
-        [Column(TypeName = "nvarchar(1)")]
+        [Column(TypeName = "varchar(20)")]
         public string AuthStatus { get; set; }
 
         [Required]

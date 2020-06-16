@@ -81,9 +81,9 @@ namespace WebApi.Infrastructure.Mapping
             {
                 Id = product.Id,
                 Desc = product.Desc,
-               // ImageUrls = new List<ImageUrlDTO>(),
                 ImageUrls = new Func<List<ImageUrlDTO>>(() => { 
                     var urls = new List<ImageUrlDTO>();
+                    if(product.ImageUrls != null)
                     foreach(ImageUrl url in product.ImageUrls)
                     {
                         urls.Add(url.ToDto());
@@ -94,7 +94,7 @@ namespace WebApi.Infrastructure.Mapping
                 Price = product.Price,
                 ProducerId = product.ProducerId,
                 Type = product.Type,
-                ProducerName = product.Producer.Name
+                ProducerName = product.Producer.Name,
             };
         }
 
@@ -108,6 +108,7 @@ namespace WebApi.Infrastructure.Mapping
                 ProducerId = dto.ProducerId,
                 ImageUrls = new Func<List<ImageUrl>>(() => { 
                     var urls = new List<ImageUrl>();
+                    if(dto.ImageUrls != null)
                     foreach(ImageUrlDTO url in dto.ImageUrls)
                     {
                         urls.Add(url.ToImage());
@@ -119,6 +120,48 @@ namespace WebApi.Infrastructure.Mapping
         }
         /* #endregion */
        
+       /* #region  Producer */
+        public static ProducerDTO ToDTO(this Producer producer)
+        {
+            return new ProducerDTO
+            {
+                ProducerId = producer.ProducerId,
+                
+                Desc = producer.Desc,
+                Products = new Func<List<ProductDTO>>(() => { 
+                    var list = new List<ProductDTO>();
+                    if(producer.Products != null)
+                    foreach(Product product in producer.Products)
+                    {
+                        list.Add(product.ToDTO());
+                    }
+                    return list;
+                 })(),
+                Name = producer.Name,
+            };
+        }
+
+         public static Producer ToProducer(this ProducerDTO dto)
+        {
+            return new Producer
+            {
+                ProducerId = dto.ProducerId.Value,
+                
+                Desc = dto.Desc,
+               // ImageUrls = new List<ImageUrlDTO>(),
+                Products = new Func<List<Product>>(() => { 
+                    var list = new List<Product>();
+                    if(dto.Products != null)
+                    foreach(ProductDTO product in dto.Products)
+                    {
+                        list.Add(product.ToProduct());
+                    }
+                    return list;
+                 })(),
+                Name = dto.Name,
+            };
+        }
+        /* #endregion */
 
         public static ImageUrlDTO ToDto(this ImageUrl image)
         {

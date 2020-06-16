@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace WebApi.Const
 {
     public static class RoleConst
@@ -8,8 +10,25 @@ namespace WebApi.Const
     }
     public static class AuthStatus
     {
-        public const string Submitted = "0";
-        public const string Approved = "1";
-        public const string Rejected = "2";
+        public const string Submitted = "Submitted";
+        public const string Approved = "Approved";
+        public const string Rejected = "Rejected";
+    }
+    
+    public static class StatusCode{
+        public const int UnAuthorized = 401;
+        public const int BadRequest = 400;
+        public const int Forbidden = 403;
+        public const int NotFound = 404;
+        public const int OK = 200;
+        public const int InternalServerError = 500;
+    }
+    public static class Response{
+    public static IDictionary<string,object> ControlerResponse(int statusCode, string msg = null){
+        var result = new {type = statusCode, message = msg};
+        return new Dictionary<string,object>{
+            {"result",result}
+        };
+    }
     }
 }

@@ -6,7 +6,22 @@
       <button mat-icon-button color="primary" class="custom-icon-button"  routerLink="/"><mat-icon>home</mat-icon></button>
       </div>
       <div class="col text-right">
-        <span class="badge  badge-primary">{{userName}}</span><button mat-icon-button color="primary" class="custom-icon-button"><mat-icon>person</mat-icon></button>
+        <span class="badge  badge-primary">{{userName}}</span><button mat-icon-button color="primary" class="custom-icon-button" [matMenuTriggerFor]="menu"><mat-icon>person</mat-icon></button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item class="no-outline-button">
+              <svg class="bi bi-gear-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z"/>
+              </svg>
+              <span style="margin-left: 10px;">Settings</span>
+            </button>
+            <button mat-menu-item class="no-outline-button" (click)="logout()">
+              <svg class="bi bi-reply-all-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.079 11.9l4.568-3.281a.719.719 0 0 0 0-1.238L8.079 4.1A.716.716 0 0 0 7 4.719V6c-1.5 0-6 0-7 8 2.5-4.5 7-4 7-4v1.281c0 .56.606.898 1.079.62z"/>
+                <path fill-rule="evenodd" d="M10.868 4.293a.5.5 0 0 1 .7-.106l3.993 2.94a1.147 1.147 0 0 1 0 1.946l-3.994 2.94a.5.5 0 0 1-.593-.805l4.012-2.954a.493.493 0 0 1 .042-.028.147.147 0 0 0 0-.252.496.496 0 0 1-.042-.028l-4.012-2.954a.5.5 0 0 1-.106-.699z"/>
+              </svg>
+              <span style="margin-left: 10px;">Sign out</span>
+            </button>
+        </mat-menu>
       </div> 
     </div>
     <div class="card">

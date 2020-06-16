@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 
-
-
     const routes: Routes = [
         //lazy loading
         {
@@ -26,3 +24,4 @@ import { RouterModule, Routes } from '@angular/router';
         declarations: []
     })
     export class AppRoutingModule { }
+

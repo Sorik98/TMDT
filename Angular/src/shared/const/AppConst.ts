@@ -1,9 +1,10 @@
 import { AuthConfig } from 'angular-oauth2-oidc';
+import { InjectionToken } from '@angular/core';
 
-export class AppConsts {
-    static remoteServiceBaseUrl = "http://localhost:5000"; 
-    static identityServerUrl = "http://localhost:5001";
-    static baseUrl = "http://localhost:4200";
+export enum AppConsts {
+     remoteServiceBaseUrl = "http://localhost:5000",
+     identityServerUrl = "http://localhost:5001",
+     baseUrl = "http://localhost:4200",
   }
 
  export const authConfig: AuthConfig = {
@@ -16,14 +17,26 @@ export class AppConsts {
     responseType: 'code',
 
   }
-  export class RoleConst{
-    static admin = "Admin";
-    static manager = "Manager";
-    static customer = "Customer";
+  export enum RoleConst{
+     admin = "Admin",
+     manager = "Manager",
+     customer = "Customer",
   }
 
   export enum EditPageState{
     add = "Add",
     edit = "Edit",
     viewDetail = "ViewDetail",
+}
+export enum AuthStatus{
+  Submitted = "Submitted",
+  Approved = "Approved",
+  Rejected = "Rejected",
+}
+
+export enum ProductType{
+  Laptop = "Laptop",
+  Keyboard = "Keyboard",
+  Mouse = "Mouse",
+  Others = "Others"
 }

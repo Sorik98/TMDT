@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +42,13 @@ namespace WebApi
                        });
             ConfigureScoped(services);
             services.AddCors();
+
+            services.Configure<FormOptions>(o => {
+                o.ValueLengthLimit = int.MaxValue;
+                o.MultipartBodyLengthLimit = int.MaxValue;
+                o.MemoryBufferThreshold = int.MaxValue;
+            });
+
             services.AddAuthentication("Bearer")
             .AddIdentityServerAuthentication(options =>
             {
@@ -129,7 +137,7 @@ namespace WebApi
             //app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseStaticFiles();
             app.UseCors(options =>
             options.WithOrigins(Configuration.GetValue<string>("Url:client"))
             .AllowAnyMethod()
@@ -149,6 +157,7 @@ namespace WebApi
         {
           //  services.AddScoped<IPaymentDetailRepository, PaymentDetailRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProducerRepository, ProducerRepository>();
         }
     }
 }

@@ -15,5 +15,6 @@ namespace WebApi.Infrastructure.DTOs{
         public DateTime? LastUpdateDate { get; set; }
 
         public string LastUpdateBy { get; set; }
+
     }
 }

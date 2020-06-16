@@ -10,7 +10,6 @@ import { ClientComponent } from './client.component';
 import { HeaderComponent } from './header&footer/header/header.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FooterComponent } from './header&footer/footer/footer.component';
-import { NotifierModule } from "angular-notifier";
 
 @NgModule({
   declarations: [
@@ -25,7 +24,6 @@ import { NotifierModule } from "angular-notifier";
     CommonModule,
     FormsModule,
     ClientRoutingModule,
-    NotifierModule,
   ],
   providers: [
     /* #region  service-proxies */

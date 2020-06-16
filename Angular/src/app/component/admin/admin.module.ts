@@ -18,8 +18,14 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import { MoneyFormatPipe } from '@shared/pipe/money-format.pipe';
 import { SideNavigationComponent } from './side-nav/side-nav.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import { SidenavService, NotifierService } from '@shared/service-proxies/services';
+import { SidenavService, FileService } from '@shared/service-proxies/services';
 import { ProductEditComponent } from './product/product-edit.component';
+import { SharedModule } from '@shared/component/shared.module';
+import {MatRippleModule} from '@angular/material/core';
+import {MatInputModule} from '@angular/material/input';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatSelectModule} from '@angular/material/select';
+import {MatSortModule} from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -28,11 +34,9 @@ import { ProductEditComponent } from './product/product-edit.component';
     AdminComponent,
     SideNavigationComponent,
     DateTimeFormatPipe,
-    MoneyFormatPipe
+    MoneyFormatPipe,
   ],
   imports: [
-    CommonModule,
-    FormsModule,
     AdminRoutingModule,
     MatTableModule,
     MatPaginatorModule,
@@ -41,18 +45,26 @@ import { ProductEditComponent } from './product/product-edit.component';
     ScrollingModule,
     MatTooltipModule,
     MatSidenavModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    SharedModule,
+    MatRippleModule,
+    MatInputModule,
+    MatMenuModule,
+    MatSelectModule,
+    MatSortModule
+    
   ],
   providers: [
     /* #region  service-proxies */
     //San pham
     ApiServiceProxies.ProductServiceProxy,
+    // Nha cung cap
+    ApiServiceProxies.ProducerServiceProxy,
     //Thong tin hoa don
    // ApiServiceProxies.PaymentDetailServiceProxy,
     /* #endregion */
     SidenavService,
-    NotifierService
-    
+    FileService,
   ]
 })
 export class AdminModule { }

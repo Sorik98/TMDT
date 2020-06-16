@@ -17,8 +17,8 @@ import { ProductEditComponent } from './product/product-edit.component';
             // Sản phẩm
             { path: 'product', component: ProductComponent },
             { path: 'product-add', component: ProductEditComponent, data: {editPageState: EditPageState.add} },
-            { path: 'product-edit', component: ProductEditComponent, data: {editPageState: EditPageState.add} },
-            { path: 'product-view', component: ProductEditComponent, data: {editPageState: EditPageState.add} },
+            { path: 'product-edit', component: ProductEditComponent, data: {editPageState: EditPageState.edit} },
+            { path: 'product-view', component: ProductEditComponent, data: {editPageState: EditPageState.viewDetail} },
 
 
 

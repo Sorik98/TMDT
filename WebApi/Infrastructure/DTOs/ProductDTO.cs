@@ -25,5 +25,6 @@ namespace WebApi.Infrastructure.DTOs
         public string Desc { get; set; }
 
         public string ProducerName { get; set; }
+
     }
 }

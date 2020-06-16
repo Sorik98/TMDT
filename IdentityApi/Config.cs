@@ -71,8 +71,8 @@ namespace IdentityApi
                     },
                     AlwaysIncludeUserClaimsInIdToken = true,
                     //Access token life time in seconds
-                    AccessTokenLifetime = 1800,
-                    IdentityTokenLifetime = 1800,
+                    AccessTokenLifetime = 18000,
+                    IdentityTokenLifetime = 18000,
                     AllowOfflineAccess = false
                 }
             };

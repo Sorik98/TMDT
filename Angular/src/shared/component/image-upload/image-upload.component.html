@@ -1,0 +1,57 @@
+<!-- <div class="container">
+<label class="image-upload-container btn btn-bwm">
+    <span>Select Image</span>
+    <input #imageInput
+           type="file"
+           accept="image/*"
+           multiple
+           (change)="processFile(imageInput)">
+  </label>
+  <div class="row">
+  <div  *ngFor="let image of imgList">
+  <div class="col-md-4">
+  <div class="img-preview-container">
+  
+    <div class="img-preview"
+         [ngStyle]="{'background-image': 'url('+ image.src + ')'}">
+    </div>
+  
+    <div *ngIf="pending" class="img-loading-overlay">
+      <div class="img-spinning-circle"></div>
+    </div>
+  
+   
+  </div>
+</div>
+</div>
+</div>
+</div> -->
+
+<div class="row">
+  <div class="col-md-12" style="padding-bottom: 15px;">
+    <input #imageInput
+           type="file"
+           accept="image/*"
+           multiple
+           (change)="processFile($event.target.files)">
+    <button type="button" [disabled]="disable" mat-raised-button color="primary" (click)="imageInput.click()" >Select Image</button>
+  </div>   
+  <div  *ngFor="let image of imgList">
+    <div class="image-container">
+      <div class="img-preview-container">
+      
+          <div class="img-preview"
+              [ngStyle]="{'background-image': 'url('+ image.src + ')'}" (click)="showModal($event)">
+          </div>
+          <div *ngIf="image.pending" class="img-loading-overlay">
+            <div class="img-spinning-circle"></div>
+          </div>
+      
+      </div>
+      <div class="img-name">{{image.name}}</div>
+    </div>
+   </div>
+</div>
+<div #imageModal class="custom-modal" (click)="closeModal()">
+  <img class="custom-modal-content">
+</div>

@@ -83,7 +83,7 @@ namespace WebApi.Migrations
 
                     b.Property<string>("AuthStatus")
                         .IsRequired()
-                        .HasColumnType("nvarchar(1)");
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("CreateBy")
                         .IsRequired()
@@ -126,7 +126,7 @@ namespace WebApi.Migrations
 
                     b.Property<string>("AuthStatus")
                         .IsRequired()
-                        .HasColumnType("nvarchar(1)");
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("CreateBy")
                         .IsRequired()
