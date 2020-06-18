@@ -28,12 +28,31 @@ namespace WebApi.Infrastructure.Models
         public decimal Price { get; set; }
 
         [Required]
+        [Column(TypeName = "decimal(18,0)")]
+        public decimal OriginalPrice { get; set; }
+
+        [Required]
+        [Column(TypeName = "decimal(2,0)")]
+        public decimal Sale { get; set; }
+
+        [Required]
         public ICollection<ImageUrl> ImageUrls { get; set; }
+
+        [Required]
+        [Column(TypeName = "nvarchar(200)")]
+        public string ShortDesc { get; set; }
 
         [Required]
         [Column(TypeName = "nvarchar(max)")]
         public string Desc { get; set; }
 
+        [Required]
+        [Column(TypeName = "decimal(10,0)")]
+        public decimal Stock { get; set; }
+
+        [Column(TypeName = "decimal(10,0)")]
+        public decimal Sold { get; set; }
+        
         public Producer Producer { get; set; }
     }
 }

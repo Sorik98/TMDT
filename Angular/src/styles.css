@@ -25,6 +25,10 @@ table tr:hover{
     padding-top: 10px;  
     padding-bottom: 30px;
   }
+.home-page-body{
+    padding-top: 40px;  
+    padding-bottom: 30px;
+}
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
@@ -131,4 +135,32 @@ textarea.mat-input-element{
 }
 .no-outline-button:focus{
     outline: none;
+}
+
+.text-auth-submitted{
+    color: rgb(91, 91, 91);
+    font-weight: 500;
+}
+.text-auth-rejected{
+    color: red;
+    font-weight: 500;
+}
+.text-auth-approved{
+    color: green;
+    font-weight: 500;
+}
+.product-card-content{
+    height: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.user-dropdown-menu{
+    color: white;
+    font-weight: 400;
+}
+.user-dropdown-menu:hover{
+    color: rgba(255, 255, 255, 0.7);
+}
+.nav-link{
+    cursor: pointer;
 }

@@ -29,6 +29,24 @@ namespace WebApi.Controllers
         {
             _productRepo = productRepo;
         }
+        
+        [HttpGet]
+        public async Task<IEnumerable<ProductDTO>> GetLatestProducts(int num)
+        {
+            var products = await _productRepo.GetLatestProducts(num);
+            if (products == null)
+            {
+                return null;
+            }
+            products = products.Where(p => p.AuthStatus == AuthStatus.Approved);
+            List<ProductDTO> products_result = new List<ProductDTO>();
+            foreach(Product product in products)
+            {
+                var dto = product.ToDTO();
+                products_result.Add(dto);
+            }
+            return products_result;
+        }
 
         [HttpGet]
         public async Task<IEnumerable<ProductDTO>> GetAll(string type)
@@ -66,42 +84,7 @@ namespace WebApi.Controllers
             return products_result;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<ProductDTO>> Search(string type = null,string name = null,int? producerId = null,int? priceFrom = null, int? priceTo = null)
-        {
-            var products = await _productRepo.Search(type,name,producerId,priceFrom,priceTo);
-            if (products == null)
-            {
-                return null;
-            }
-            products = products.Where(p => p.AuthStatus == AuthStatus.Approved);
-            List<ProductDTO> products_result = new List<ProductDTO>();
-            foreach(Product product in products)
-            {
-                var dto = product.ToDTO();
-                products_result.Add(dto);
-            }
-            return products_result;
-        }
-
-        [Authorize(Roles = "Admin,Manager")]
-        [HttpGet]
-        public async Task<IEnumerable<ProductDTO>> SearchAdmin(string type = null,string name = null,int? producerId = null,int? priceFrom = null, int? priceTo = null)
-        {
-            var products = await _productRepo.Search(type,name,producerId,priceFrom,priceTo);
-            if (products == null)
-            {
-                return null;
-            }
-            List<ProductDTO> products_result = new List<ProductDTO>();
-            foreach(Product product in products)
-            {
-                var dto = product.ToDTO();
-                dto.SetAuditForDTO(product);
-                products_result.Add(dto);
-            }
-            return products_result;
-        }
+        
 
         [HttpGet]
         public async Task<ProductDTO> GetBy(int id)
@@ -126,7 +109,7 @@ namespace WebApi.Controllers
 
         [Authorize(Roles = "Admin,Manager")]
         [HttpPost]
-        public async Task<IDictionary<string,object>> Create (ProductDTO productDTO)
+        public async Task<IDictionary<string,object>> Create ([FromBody] ProductDTO productDTO)
         {
            // var user = User.;
            try{
@@ -148,8 +131,8 @@ namespace WebApi.Controllers
            if(productDTO.Id == null)return Const.Response.ControlerResponse(Const.StatusCode.BadRequest);
            try{
                 var product = productDTO.ToProduct();
+                product.SetAuditForUpdate(productDTO);
                 await _productRepo.Update(product);
-
                 return  Const.Response.ControlerResponse(Const.StatusCode.OK,"Action complete successfully");
            }
            catch(Exception e){
@@ -157,45 +140,30 @@ namespace WebApi.Controllers
                 return Const.Response.ControlerResponse(Const.StatusCode.InternalServerError,e.ToString());
            }
         }
-        // [HttpPut]
-        // public async Task<IDictionary<string,object>> Update(int id, ProductDTO paymentDTO)
-        // {
-        //     if (id != paymentDTO.PaymentId)
-        //     {
-        //         return BadRequest();
-        //     }
+       
+        [Authorize(Roles = "Admin")]
+        [HttpDelete]
+        public async Task<IDictionary<string,object>> Approve(bool isApprove, int id, string user)
+        {
+            try{
+        
+            await _productRepo.Approve(isApprove, id, user);
 
-        //     var product = await _productRepo.GetBy(id);
+            return  Const.Response.ControlerResponse(Const.StatusCode.OK,"Action complete successfully");
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return Const.Response.ControlerResponse(Const.StatusCode.InternalServerError,e.ToString());
+            }
+        }
 
-        //     if (product == null)
-        //     {
-        //         return NotFound();
-        //     }
-
-        //     paymentDTO.MapTo(product);
-
-        //     // try
-        //     // {
-        //     //     await _productRepo.Add(product);
-        //     // }
-        //     // catch (DbUpdateConcurrencyException) when (!_productRepo.MovieExists(id))
-        //     // {
-        //     //     return NotFound();
-        //     // }
-
-        //     return NoContent();
-        // }
         [Authorize(Roles = "Admin")]
         [HttpDelete]
         public async Task<IDictionary<string,object>> Delete(int id)
         {
             try{
-            // var product = await _productRepo.GetBy(id);
-
-            // if (product == null)
-            // {
-            //     return NotFound();
-            // }
+            
 
             await _productRepo.Delete(id);
 

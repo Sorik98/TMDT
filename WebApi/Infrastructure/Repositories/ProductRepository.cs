@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using WebApi.Const;
 using WebApi.Database.Context;
 using WebApi.Infrastructure.DTOs;
 using WebApi.Infrastructure.Interfaces;
@@ -39,15 +41,13 @@ namespace WebApi.Infrastructure.Repositories
 
             return products;
         }
-        public async Task<IEnumerable<Product>> Search(string type = null,string name = null,int? producerId = null,int? priceFrom = null, int? priceTo = null){
-            var products = await _context.Products.Where(p => type == null ? p.Type == type : true)
-                                                .Where(p => name == null ? (p.Name.Contains(name) ? true : false) : true)
-                                                .Where(p => producerId == null ? p.ProducerId == producerId : true)
-                                                .Where(p => priceFrom == null ? p.Price >= priceFrom : true)
-                                                .Where(p => priceTo == null ? p.Price >= priceTo : true)
-                                                .ToListAsync();
+        
+        public async Task<IEnumerable<Product>> GetLatestProducts(int num)
+        {
+            var products = await _context.Products.Include(p => p.Producer).Include(p => p.ImageUrls).OrderByDescending(p => p.AuthDate).Take(num).ToListAsync();
             return products;
         }
+
         public async Task<Product> GetBy(int id)
         {
             return await _context.Products.Where(p => p.Id == id).Include(p => p.Producer).Include(p => p.ImageUrls).FirstOrDefaultAsync();
@@ -60,6 +60,7 @@ namespace WebApi.Infrastructure.Repositories
         }
         public async Task Update(Product product)
         {
+            _context.ImageUrls.RemoveRange(_context.ImageUrls.Where(img => img.ProductId == product.Id));
             _context.Products.Update(product);
             await _context.SaveChangesAsync();
         }
@@ -69,6 +70,16 @@ namespace WebApi.Infrastructure.Repositories
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
         }
+
+        public async Task Approve(bool isApprove, int id, string user)
+        {
+            var product = await _context.Products.Where(p => p.Id == id).FirstOrDefaultAsync();
+            product.AuthStatus = isApprove ? AuthStatus.Approved : AuthStatus.Rejected;
+            product.AuthDate =  DateTime.Now;
+            product.AuthBy = user;
+            await _context.SaveChangesAsync();
+        }
+
         /* #endregion */
     }
 }

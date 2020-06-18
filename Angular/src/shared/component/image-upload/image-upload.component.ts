@@ -17,7 +17,7 @@ import { repeat } from 'rxjs/operators';
     @Output() ImageSnippets = new EventEmitter<ImageSnippet[]>();
     @Output() files = new EventEmitter<FileList>();
     @Input() disable: boolean = false;
-    constructor(){console.log(this)}
+    constructor(){}
   
     // private onSuccess() {
     //   this.selectedFile.pending = false;

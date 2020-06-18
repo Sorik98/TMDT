@@ -4,10 +4,10 @@ import { ProductServiceProxy, ProductDTO } from '@shared/service-proxies/service
 import { ProductType } from '@shared/const/AppConst';
 
 @Component({
-  templateUrl: './home.component.html',
+  templateUrl: './product-detail.component.html',
   styles: []
 })
-export class HomeComponent extends ClientComponentBase implements OnInit {
+export class ProductDetailComponent extends ClientComponentBase implements OnInit {
 
   constructor(
     injector: Injector,
@@ -15,20 +15,17 @@ export class HomeComponent extends ClientComponentBase implements OnInit {
   ) {
     super(injector);
    }
-
    ProductType = ProductType;
-   products: ProductDTO[];
-   productNum = 10;
-
+   product: ProductDTO = new ProductDTO();
   ngOnInit(): void {
-    console.log(this);
-    this.getLatestProducts();
+      console.log(this)
+      this.getProducts(this.getRouteParam("id"));
   }
 
-  getLatestProducts(){
-    this.productService.getLatestProducts(10).subscribe(res => {
-      this.products = res;
-    })
+  getProducts(id: number ){
+    
+    this.productService.getBy(id).subscribe(res => {
+      this.product = res;
+    });
   }
-
 }

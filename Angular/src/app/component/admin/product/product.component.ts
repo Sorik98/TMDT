@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild, Injector, ElementRef } from '@angular/core';
-import { ProductServiceProxy,ProductDTO, ProducerDTO, ProducerServiceProxy } from '@shared/service-proxies/service-proxies';
+import { ProductServiceProxy,ProductDTO, ProducerDTO, ProducerServiceProxy, ImageUrlDTO } from '@shared/service-proxies/service-proxies';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { AdminComponentBase } from '../admin-component-base';
 import { ProductType } from '@shared/const/AppConst';
 import { MatSort } from '@angular/material/sort';
+import { ThrowStmt } from '@angular/compiler';
+import { FileService } from '@shared/service-proxies/services';
 
 @Component({
   templateUrl: 'product.component.html',
@@ -14,9 +16,9 @@ export class ProductComponent extends AdminComponentBase implements OnInit {
               injector: Injector,
               private productService: ProductServiceProxy,
               private producerService: ProducerServiceProxy,
+              private fileService: FileService
               ){
                 super(injector);
-                console.log(this);
   }
 
   displayedColumns = ['name',"image","price","desc","producerName","authStatus","createDate","createBy","authDate","authBy","lastUpdateDate","lastUpdateBy","action"];
@@ -79,7 +81,28 @@ export class ProductComponent extends AdminComponentBase implements OnInit {
     this.navigatePassParam("admin/product-view",{id: item.id},{ filterInput: JSON.stringify(this.toCamel(this.filterInput)) })
   }
   onDelete(item: ProductDTO){
-    if(confirm("Are you sure to delete "+item.name))alert("Deleted");
+    if(confirm("Are you sure to delete "+item.name)){
+      this.productService.delete(item.id).subscribe(res => {
+        if(res.result.type == 200)
+            {
+              var urls =[];
+              item.imageUrls.forEach(v => {
+                var split = v.url.split("/");
+                urls.push(split[split.length-1]);
+              });
+              
+              this.fileService.deleteImages(urls).subscribe(res => {
+                  if(res.result.type == 200)
+                  {
+                    this.alert("success",res.result.message);
+                    this.ngOnInit();
+                  }
+                  else this.alert("danger","Failed to upload image. Error: " + res.result.message)
+              });
+            }
+            else this.alert("danger",res.result.message);
+      });
+    }
   }
   
 }

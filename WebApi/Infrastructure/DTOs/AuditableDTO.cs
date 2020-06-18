@@ -4,7 +4,7 @@ namespace WebApi.Infrastructure.DTOs{
     public class AuditableDTO{
          public string AuthStatus { get; set; }
 
-        public DateTime CreateDate { get; set; }        
+        public DateTime? CreateDate { get; set; }        
  
         public string CreateBy { get; set; }
 

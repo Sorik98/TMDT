@@ -10,7 +10,7 @@ import { PromiseType } from 'protractor/built/plugins';
 
 
 
-export abstract class AdminComponentBase{
+export abstract class ClientComponentBase{
   protected  userService: UserService;
 
   protected router: Router;
@@ -36,13 +36,13 @@ export abstract class AdminComponentBase{
   get userEmail() {
     return this.userService.Email;
   }
+  get userId(){
+    return this.userService.UserId;
+  }
   @ViewChild(CustomNotifier) notifier: CustomNotifier;
 
 
-  isAdmin()
-  {
-    return this.userService.Role == RoleConst.admin;
-  }
+ 
   alert(type: string,message: string){
     this.notifier.alert(type,message);
   }
@@ -70,29 +70,12 @@ export abstract class AdminComponentBase{
   getRouteParam(key: string): any {
     return (this.activedRoute.params as any).value[key];
   }
-  onGetFilter(filterInput) {
-
-    }
+ 
    reloadPage(){
     window.location.reload();
    }
-    getFilterInputInRoute(getFilterInput): any {
-        this.activedRoute.queryParams.subscribe(response => {
-            var str = response['filterInput'];
-            if (getFilterInput) {
-                getFilterInput(str);
-            }
-        })
-    }
-
-    initFilter() {
-        this.getFilterInputInRoute((filterJson) => {
-            if (filterJson) {
-                (this as any).filterInput = JSON.parse(filterJson);
-                this.onGetFilter((this as any).filterInput);
-            }
-        });
-    }
+    
+    
     getObjectKeys(data: any): Array<string> {
       var keys = Object.keys(data);
       

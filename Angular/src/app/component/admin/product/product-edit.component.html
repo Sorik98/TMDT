@@ -20,35 +20,59 @@
   </div>
   <div class="col text-right">
     <button mat-raised-button color="primary" (click)="onSave()" *ngIf="!isView()">Save</button>
+    <button mat-raised-button style="margin-right: 10px;" color="warn" (click)="onReject()" *ngIf="isView()" [disabled]="!isApprovable()">Reject</button>
     <button mat-raised-button color="primary" (click)="onApprove()" *ngIf="isView()" [disabled]="!isApprovable()">Approve</button>
   </div>
   </div>
       <!-- /.col-lg-3 -->
-      <form>
+      
       <div class="row">
           <div class="col-md-6">
           <mat-form-field>
             <mat-label>Name</mat-label>
-            <input  matInput placeholder="Product name" value="{{inputModel.name}}" [disabled]="isView()" >
+            <input  matInput placeholder="Product name" [(ngModel)]="inputModel.name" [disabled]="isView()" >
           </mat-form-field>    
           </div> 
-          <div class="col-md-6"></div>
+          <div class="col-md-3">
+            <mat-form-field>
+              <mat-label>Stock</mat-label>
+              <input type="number"  matInput  [(ngModel)]="inputModel.stock" [disabled]="isView()" >
+            </mat-form-field>    
+          </div> 
           <div class="col-md-6">
               <div class="row">
                 <div class="col-md-10">
                     <mat-form-field>
-                    <mat-label>Price</mat-label>
-                    <input class="money-input" matInput matInputCommified placeholder="Product price" value="{{inputModel.price}}" type="text" [disabled]="isView()" >
+                    <mat-label>Original Price</mat-label>
+                    <input class="money-input" matInput matInputCommified #moneyInput placeholder="Product original price" [value]="inputModel.originalPrice" type="text" [disabled]="isView()" >
                   </mat-form-field>    
                 </div>  
                 <div class="align-self-center">VNĐ</div> 
               </div>
           </div>
-          
+          <div class="col-md-6">
+            <mat-form-field>
+              <mat-label>Sale</mat-label>
+              <input type="number"  matInput  [(ngModel)]="inputModel.sale" [disabled]="isView()" (change)="onSaleInputChange()" >
+            </mat-form-field>    
+          </div> 
+        
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-10">
+                  <mat-form-field>
+                  <mat-label>Price</mat-label>
+                  <input class="money-input" matInput matInputCommified  placeholder="Product price" [value]="inputModel.price" type="text" [disabled]="true" >
+                </mat-form-field>    
+              </div>  
+              <div class="align-self-center">VNĐ</div> 
+            </div>
+        </div>
+
           <div class = "col-md-3">
           <mat-form-field>
             <mat-label>Producer</mat-label>
-            <mat-select [(value)]="inputModel.producerId" [disabled]="isView()">
+            <mat-select [(ngModel)]="inputModel.producerId" [disabled]="isView()">
               <mat-option *ngFor="let producer of producers" [value]="producer.producerId">{{producer.name}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -56,16 +80,22 @@
         <div class = "col-md-3">
           <mat-form-field>
             <mat-label>Type</mat-label>
-            <mat-select [(value)]="inputModel.type" [disabled]="isView()">
+            <mat-select [(ngModel)]="inputModel.type" [disabled]="isView()">
               <mat-option *ngFor="let key of getObjectKeys(ProductType)" [value]="ProductType[key]">{{ProductType[key]}}</mat-option>
             </mat-select>
           </mat-form-field>
       
           </div>
           <div class="col-md-12">
+            <mat-form-field>
+              <mat-label>Short Desciption</mat-label>
+              <textarea matInput  placeholder="Product short description" [(ngModel)]="inputModel.shortDesc" [disabled]="isView()" [rows]="3" [maxLength] = "150"></textarea>
+            </mat-form-field>  
+            </div> 
+          <div class="col-md-12">
           <mat-form-field>
             <mat-label>Desciption</mat-label>
-            <textarea matInput  placeholder="Product description" value="{{inputModel.desc}}" [disabled]="isView()"  [matTextareaAutosize]="true" [matAutosizeMaxRows]="25" 
+            <textarea matInput  placeholder="Product description" [(ngModel)]="inputModel.desc" [disabled]="isView()"  [matTextareaAutosize]="true" [matAutosizeMaxRows]="25" 
                       [matAutosizeMinRows]="5"></textarea>
           </mat-form-field>  
           </div>  
@@ -74,7 +104,7 @@
         </div> 
     </div>
         <!-- /.card -->
-    </form>
+    
       <!-- /.col-lg-9 -->
 
   </div>

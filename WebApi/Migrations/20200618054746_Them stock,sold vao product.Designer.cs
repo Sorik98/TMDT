@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Database.Context;
 
 namespace WebApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200618054746_Them stock,sold vao product")]
+    partial class Themstocksoldvaoproduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -160,10 +162,6 @@ namespace WebApi.Migrations
 
                     b.Property<decimal>("Sale")
                         .HasColumnType("decimal(2,0)");
-
-                    b.Property<string>("ShortDesc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)");
 
                     b.Property<decimal>("Sold")
                         .HasColumnType("decimal(10,0)");

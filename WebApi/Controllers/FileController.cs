@@ -24,23 +24,23 @@ namespace WebApi.Controllers
     public class FileController : ControllerBase
     {
         private readonly IWebHostEnvironment _env;
-
+        private readonly string imageFolderDir;
         public FileController(IWebHostEnvironment env)
         {
             this._env = env;
+            imageFolderDir = Path.Combine(_env.WebRootPath, "Image");
         }
 
         [HttpPost]
         public async Task<IDictionary<string,object>> OnUploadImage()
         {
             try {
-            object result;
+
             var src = Request.Form.Files;
-            var uploads = Path.Combine(_env.WebRootPath, "Image");
             foreach(var file in src){
-                if(System.IO.File.Exists(Path.Combine(uploads, file.FileName))) {
+                if(System.IO.File.Exists(Path.Combine(imageFolderDir, file.FileName))) {
                     
-                    return Const.Response.ControlerResponse(Const.StatusCode.BadRequest,$"File {file.FileName} already existed");
+                    return Const.Response.ControlerResponse(Const.StatusCode.BadRequest,$"File {file.FileName} already exists");
                 }
                 var postedFileExtension = Path.GetExtension(file.FileName);
                 if (!string.Equals(postedFileExtension , ".jpg", StringComparison.OrdinalIgnoreCase)
@@ -48,7 +48,7 @@ namespace WebApi.Controllers
                     && !string.Equals(postedFileExtension , ".gif", StringComparison.OrdinalIgnoreCase)
                     && !string.Equals(postedFileExtension , ".jpeg", StringComparison.OrdinalIgnoreCase))
                 {
-                    return Const.Response.ControlerResponse(Const.StatusCode.BadRequest,$"File {file.FileName} is not image");
+                    return Const.Response.ControlerResponse(Const.StatusCode.BadRequest,$"File {file.FileName} is not an image");
                 }
 
             }
@@ -57,13 +57,42 @@ namespace WebApi.Controllers
                     { 
                         var extension = Path.GetExtension(file.FileName);
                         
-                        using (var fileStream = new FileStream(Path.Combine(uploads, file.FileName), FileMode.Create))
+                        using (var fileStream = new FileStream(Path.Combine(imageFolderDir, file.FileName), FileMode.Create))
                         {
                             await file.CopyToAsync(fileStream);
                         }
                     }
             }
-             result = new {type="Success",message ="Action complete successfully"};
+
+             return Const.Response.ControlerResponse(Const.StatusCode.OK,$"Action complete successfully");
+            }
+            catch(Exception e) { 
+                Console.WriteLine(e.ToString());
+                return Const.Response.ControlerResponse(Const.StatusCode.InternalServerError,e.ToString());
+            }
+        }
+
+        [HttpDelete]
+        [Authorize(Roles="Admin")]
+        public  IDictionary<string,object> DeleteImages(string[] images){
+        try{
+            foreach(var image in images){ 
+                if(!System.IO.File.Exists(Path.Combine(imageFolderDir, image))) {
+                    
+                    return Const.Response.ControlerResponse(Const.StatusCode.BadRequest,$"File {image} doesn't exist");
+                }
+                var postedFileExtension = Path.GetExtension(image);
+                if (!string.Equals(postedFileExtension , ".jpg", StringComparison.OrdinalIgnoreCase)
+                    && !string.Equals(postedFileExtension , ".png", StringComparison.OrdinalIgnoreCase)
+                    && !string.Equals(postedFileExtension , ".gif", StringComparison.OrdinalIgnoreCase)
+                    && !string.Equals(postedFileExtension , ".jpeg", StringComparison.OrdinalIgnoreCase))
+                {
+                    return Const.Response.ControlerResponse(Const.StatusCode.BadRequest,$"File {image} is not an image");
+                }
+
+            }
+            foreach(var image in images) System.IO.File.Delete(Path.Combine(imageFolderDir, image));
+
              return Const.Response.ControlerResponse(Const.StatusCode.OK,$"Action complete successfully");
             }
             catch(Exception e) { 

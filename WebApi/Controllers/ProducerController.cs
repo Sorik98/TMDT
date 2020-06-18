@@ -110,6 +110,7 @@ namespace WebApi.Controllers
            if(producerDTO.ProducerId == null)return Const.Response.ControlerResponse(Const.StatusCode.BadRequest);
            try{
                 var producer = producerDTO.ToProducer();
+                producer.SetAuditForCreate(producerDTO);
                 await _producerRepo.Update(producer);
 
                 return  Const.Response.ControlerResponse(Const.StatusCode.OK,"Action complete successfully");

@@ -4,6 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ClientComponent } from './client.component';
+import { ProductListComponent } from './product-list/product-list.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 
 
 const clientRoutes: Routes = [
@@ -13,6 +15,8 @@ const clientRoutes: Routes = [
         children: [
             //{ path: 'payment-detail', component: PaymentDetailComponent },
             { path: 'home', component: HomeComponent },
+            { path: 'product/:type', component: ProductListComponent},
+            { path: 'product/:type/:id', component: ProductDetailComponent},
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: '**', component: PageNotFoundComponent },  // Wildcard route for a 404 page
         ]

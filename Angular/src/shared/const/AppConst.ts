@@ -40,3 +40,6 @@ export enum ProductType{
   Mouse = "Mouse",
   Others = "Others"
 }
+export enum ServerFolder{
+    Image = "Image",
+}

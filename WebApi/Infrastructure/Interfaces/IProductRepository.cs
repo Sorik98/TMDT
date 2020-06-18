@@ -10,7 +10,8 @@ namespace WebApi.Infrastructure.Interfaces
     public interface IProductRepository : IRepository<Product>
     {
        Task<IEnumerable<Product>> GetAll(string type);
-       
-       Task<IEnumerable<Product>> Search(string type = null,string name = null,int? producerId = null,int? priceFrom = null, int? priceTo = null);
+
+       Task Approve(bool isApprove, int id, string user);
+       Task<IEnumerable<Product>> GetLatestProducts(int num);
     }
 }

@@ -10,6 +10,11 @@ import { ClientComponent } from './client.component';
 import { HeaderComponent } from './header&footer/header/header.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FooterComponent } from './header&footer/footer/footer.component';
+import { UserService } from '@shared/service-proxies/services';
+import { SharedModule } from '@shared/component/shared.module';
+import { ProductListComponent } from './product-list/product-list.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
+
 
 @NgModule({
   declarations: [
@@ -17,6 +22,9 @@ import { FooterComponent } from './header&footer/footer/footer.component';
     HomeComponent,
     HeaderComponent,
     FooterComponent,
+    ProductListComponent,
+    ProductDetailComponent,
+
     PageNotFoundComponent,
     ClientComponent
   ],
@@ -24,9 +32,12 @@ import { FooterComponent } from './header&footer/footer/footer.component';
     CommonModule,
     FormsModule,
     ClientRoutingModule,
+    SharedModule
   ],
   providers: [
     /* #region  service-proxies */
+    // San pham
+    ApiServiceProxies.ProductServiceProxy,
     //Thong tin hoa don
     //ApiServiceProxies.PaymentDetailServiceProxy,
     /* #endregion */

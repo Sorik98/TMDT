@@ -14,7 +14,6 @@ export class MatInputCommifiedDirective {
 
   constructor(private elementRef: ElementRef<HTMLInputElement>,
   ) {
-    console.log('created directive');
   }
 
 

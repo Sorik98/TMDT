@@ -1,8 +1,8 @@
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" href="#">Start Bootstrap</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <a class="navbar-brand" href="#">GearShop</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -13,17 +13,28 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" (click)="login()">About</a>
+            <a class="nav-link">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" (click)="logout()">Services</a>
+            <a class="nav-link">Services</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/payment-detail">Contact</a>
+            <a class="nav-link">Contact</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" *ngIf="!isLogin()">Welcome</a>
-            <a class="nav-link" *ngIf="isLogin()">Hello <span class ="nav-link-span" style="color: green;font: bold,italic">{{userName}}</span></a>
+            <a class="nav-link" *ngIf="!isLogin()" (click)="login()">Sign in</a>
+          </li>
+          <li class="nav-item" *ngIf="isLogin()">
+            <div class="btn-group">
+              <div  class="btn dropdown-toggle user-dropdown-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               Hello  <span  style="color: rgb(27, 251, 27)">{{userName}}</span>
+              </div>
+              <div class="dropdown-menu dropdown-menu-right">
+                <button class="dropdown-item" type="button">Action</button>
+                <button class="dropdown-item" type="button">Another action</button>
+                <button class="dropdown-item" type="button" (click)="logout()">Sign out</button>
+              </div>
+            </div>
           </li>
         </ul>
       </div>

@@ -20,22 +20,34 @@ namespace WebApi.Infrastructure.Mapping
         }
         public static void SetAuditForCreate(this Auditable model,AuditableDTO dto){
             model.CreateBy = dto.CreateBy;
-            model.CreateDate = dto.CreateDate;
+            model.CreateDate = DateTime.Now;
             model.AuthStatus = AuthStatus.Submitted;
         }
         public static void SetAuditForUpdate(this Auditable model,AuditableDTO dto){
+            model.CreateBy = dto.CreateBy;
+            model.CreateDate = dto.CreateDate.Value;
+            model.AuthBy = dto.AuthBy;
+            model.AuthDate = dto.AuthDate.HasValue?dto.AuthDate.Value : (DateTime?) null;
             model.AuthStatus = AuthStatus.Submitted;
-            model.LastUpdateDate = dto.LastUpdateDate;
+            model.LastUpdateDate = DateTime.Now;
             model.LastUpdateBy = dto.LastUpdateBy;
         }
         public static void SetAuditForApprove(this Auditable model,AuditableDTO dto){
+            model.CreateBy = dto.CreateBy;
+            model.CreateDate = dto.CreateDate.Value;
+            model.LastUpdateDate = dto.LastUpdateDate.HasValue?dto.LastUpdateDate.Value : (DateTime?) null;
+            model.LastUpdateBy = dto.LastUpdateBy;
             model.AuthBy = dto.AuthBy;
-            model.AuthDate = dto.AuthDate;
+            model.AuthDate = DateTime.Now;
             model.AuthStatus = AuthStatus.Approved;
         }
         public static void SetAuditForReject(this Auditable model,AuditableDTO dto){
+            model.CreateBy = dto.CreateBy;
+            model.CreateDate = dto.CreateDate.Value;
+            model.LastUpdateDate = dto.LastUpdateDate.HasValue?dto.LastUpdateDate.Value : (DateTime?) null;
+            model.LastUpdateBy = dto.LastUpdateBy;
             model.AuthBy = dto.AuthBy;
-            model.AuthDate = dto.AuthDate;
+            model.AuthDate = DateTime.Now;
             model.AuthStatus = AuthStatus.Rejected;
         }
         /* #region  PaymentDetail */
@@ -80,6 +92,7 @@ namespace WebApi.Infrastructure.Mapping
             return new ProductDTO
             {
                 Id = product.Id,
+                ShortDesc = product.ShortDesc,
                 Desc = product.Desc,
                 ImageUrls = new Func<List<ImageUrlDTO>>(() => { 
                     var urls = new List<ImageUrlDTO>();
@@ -95,17 +108,21 @@ namespace WebApi.Infrastructure.Mapping
                 ProducerId = product.ProducerId,
                 Type = product.Type,
                 ProducerName = product.Producer.Name,
+                OriginalPrice = product.OriginalPrice,
+                Sale = product.Sale,
+                Stock = product.Stock,
+                Sold = product.Sold
             };
         }
 
         public static Product ToProduct(this ProductDTO dto)
         {
             return new Product{
-                Id = dto.Id.Value,
+                Id = dto.Id.HasValue ? dto.Id.Value : 0,
+                ShortDesc = dto.ShortDesc,
                 Desc = dto.Desc,
-                Name = dto.Name,
-                Price = dto.Price,
-                ProducerId = dto.ProducerId,
+                Name= dto.Name,
+                ProducerId = dto.ProducerId.Value,
                 ImageUrls = new Func<List<ImageUrl>>(() => { 
                     var urls = new List<ImageUrl>();
                     if(dto.ImageUrls != null)
@@ -116,6 +133,10 @@ namespace WebApi.Infrastructure.Mapping
                     return urls;
                  })(),
                 Type = dto.Type,
+                OriginalPrice = dto.OriginalPrice.Value,
+                Price = Math.Round(dto.OriginalPrice.Value - (dto.OriginalPrice.Value * dto.Sale.Value / 100)),
+                Sale = dto.Sale.Value,
+                Stock = dto.Stock.Value
             };
         }
         /* #endregion */
@@ -145,7 +166,7 @@ namespace WebApi.Infrastructure.Mapping
         {
             return new Producer
             {
-                ProducerId = dto.ProducerId.Value,
+                ProducerId = dto.ProducerId.HasValue? dto.ProducerId.Value : 0,
                 
                 Desc = dto.Desc,
                // ImageUrls = new List<ImageUrlDTO>(),

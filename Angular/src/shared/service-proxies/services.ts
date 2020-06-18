@@ -8,7 +8,7 @@ import * as jwtDecode from "jwt-decode";
 import { authConfig, RoleConst, AppConsts } from '@shared/const/AppConst';
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 import { MatSidenav } from '@angular/material/sidenav';
-import { HttpClient, HttpResponseBase, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponseBase, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { ApiException } from './service-proxies';
 
 @Injectable()
@@ -29,9 +29,15 @@ export class UserService {
     get Name(){
         return this.user.name;
     }
+    get Email(){
+        return this.user.email;
+    }
     /* #region  public methods */
     get Role(){
         return this.user.role;
+    }
+    get UserId(){
+        return this.user.id;
     }
     isLogin(){
         return this.login_;
@@ -223,7 +229,63 @@ export class FileService {
         }
         return _observableOf<{ [key: string]: any; }>(<any>null);
     }
+    deleteImages(body: string[] | null | undefined): Observable<{ [key: string]: any; }> {
+        let url_ = AppConsts.remoteServiceBaseUrl + "/api/File/DeleteImages";
+        url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteImages(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteImages(<any>response_);
+                } catch (e) {
+                    return <Observable<{ [key: string]: any; }>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<{ [key: string]: any; }>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteImages(response: HttpResponseBase): Observable<{ [key: string]: any; }> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200) {
+                result200 = {} as any;
+                for (let key in resultData200) {
+                    if (resultData200.hasOwnProperty(key))
+                        result200![key] = resultData200[key];
+                }
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<{ [key: string]: any; }>(<any>null);
+    }
       
 }
 
