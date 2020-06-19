@@ -21,7 +21,6 @@ export class HomeComponent extends ClientComponentBase implements OnInit {
    productNum = 10;
 
   ngOnInit(): void {
-    console.log(this);
     this.getLatestProducts();
   }
 

@@ -184,6 +184,101 @@ namespace WebApi.Infrastructure.Mapping
         }
         /* #endregion */
 
+         /* #region  CartItem */
+        public static CartItemDTO ToDTO(this CartItem cart)
+        {
+            return new CartItemDTO
+            {
+                Id = cart.Id,
+                Product = cart.Product.ToDTO(),
+                Quantity = cart.Quantity,
+                UserId = cart.UserId
+            };
+        }
+
+        public static CartItem ToCart(this CartItemDTO dto)
+        {
+            return new CartItem{
+                Id = dto.Id.HasValue ? dto.Id.Value : 0,
+                ProductId = dto.Product.Id.Value,
+                Quantity = dto.Quantity.Value,
+                UserId = dto.UserId
+            };
+        }
+        /* #endregion */
+
+        /* #region  Order */
+        public static OrderDTO ToDTO(this Order order)
+        {
+            return new OrderDTO
+            {
+                Id = order.Id,
+                CompleteDate = order.CompleteDate,
+                CreateDate = order.CreateDate,
+                OrderDetails = new Func<List<OrderDetailDTO>>(() => { 
+                    var items = new List<OrderDetailDTO>();
+                    if(order.OrderDetails != null)
+                    foreach(OrderDetail item in order.OrderDetails)
+                    {
+                        items.Add(item.ToDTO());
+                    }
+                    return items;
+                 })(),
+                 ReceiverAddress = order.ReceiverAddress,
+                 ReceiverName = order.ReceiverName,
+                 ReceiverPhone = order.ReceiverPhone,
+                 Status = order.Status,
+                 UserId = order.UserId
+            };
+        }
+
+        public static Order ToOrder(this OrderDTO dto)
+        {
+            return new Order{
+                OrderDetails = new Func<List<OrderDetail>>(() => { 
+                    var items = new List<OrderDetail>();
+                    if(dto.OrderDetails != null)
+                    foreach(OrderDetailDTO item in dto.OrderDetails)
+                    {
+                        items.Add(item.ToOrderDetail());
+                    }
+                    return items;
+                 })(),
+                ReceiverAddress = dto.ReceiverAddress,
+                ReceiverName = dto.ReceiverName,
+                ReceiverPhone = dto.ReceiverPhone,
+                UserId = dto.UserId,
+            };
+        }
+        /* #endregion */
+        /* #region  OrderDetail */
+        public static OrderDetailDTO ToDTO(this OrderDetail orderDetail)
+        {
+            return new OrderDetailDTO
+            {
+                Id = orderDetail.Id,
+                OrderId = orderDetail.Id,
+                Image = new Func<ImageUrlDTO>(() => { 
+                   var dto = new ImageUrlDTO();
+                   foreach(ImageUrl url in orderDetail.Product.ImageUrls)
+                    return dto = url.ToDto();
+                    return dto;
+                 })(),
+                ProductName = orderDetail.Product.Name,
+                ProductId = orderDetail.ProductId,
+                Quantity = orderDetail.Quantity,
+            };
+        }
+        public static OrderDetail ToOrderDetail(this OrderDetailDTO dto)
+        {
+            return new OrderDetail
+            {
+                ProductId = dto.ProductId.Value,
+                Quantity = dto.Quantity.Value,
+            };
+        }
+        
+        /* #endregion */
         public static ImageUrlDTO ToDto(this ImageUrl image)
         {
             return new ImageUrlDTO{

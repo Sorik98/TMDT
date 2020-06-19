@@ -1,0 +1,69 @@
+<div class="row cart-page-body">
+    <div class="col-md-12">
+        <custom-notifier></custom-notifier>
+    </div>
+    <div class="col-md-10 offset-md-1">
+    
+        <div class="row align-items-center cart-item" *ngFor="let item of cart">
+            <div class="col-md-3"><span class="cross" (click)="onDeleteItem(item.id)">&#10060;</span><img class="product-list-img" src="{{item.product.imageUrls[0].url}}"></div>
+            <div class="col-md-3">
+            <div class="name">{{item.product.name}}</div>
+            <div>Nhà sản xuất: <span class="producer-name">{{item.product.producerName}}</span></div>
+            <div >Giá: <span class="price">{{item.product.price | moneyFormatPipe}} </span>VNĐ</div>
+            <div >Số lượng <span class="quantity">{{item.quantity}}</span></div>
+            <div>Tổng cộng <span class="total">{{item.product.price*item.quantity | moneyFormatPipe}}</span> VNĐ</div>
+            </div>
+        </div>
+    </div>
+  
+    <div class="col-md-5 offset-md-4">
+        <button mat-raised-button color="primary" (click)="open(content)">Đặt hàng</button>
+        <button mat-raised-button color="warn" style="margin-left: 20px;" (click)="onDeleteCart()">Xóa giỏ hàng</button>
+    </div>
+    
+</div>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Thông tin nhận hàng</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form #form>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+            <mat-form-field>
+            <mat-label >Tên người nhận</mat-label>
+            <input matInput type="text" name="receiverName" #receiverName="ngModel" [(ngModel)]="order.receiverName">
+            </mat-form-field>
+            </div>
+            <div class="col-md-6">
+            <mat-form-field>
+                <mat-label >SĐT</mat-label>
+                <span matPrefix>+84 &nbsp;</span>
+                <input type="tel" matInput name="receiverPhone" #receiverPhone="ngModel" placeholder="phone number" [(ngModel)]="order.receiverPhone" >
+            </mat-form-field>
+        </div>
+        <div class="col-md-12">
+            <mat-form-field>
+                <mat-label >Địa chỉ giao hàng</mat-label>
+                <textarea matInput name="receiverAddress" #receiverAddress="ngModel" [rows]="3" [maxLength] = "150" [(ngModel)]="order.receiverAddress"></textarea>
+            </mat-form-field>
+          </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="createOrder()" [disabled]="saveBtnDisable">Save</button>
+    </div>
+  </ng-template>
+  
+
+  
+  <hr>
+  
+  

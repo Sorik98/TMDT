@@ -23,6 +23,15 @@ namespace WebApi.Const
         public const int OK = 200;
         public const int InternalServerError = 500;
     }
+
+    public static class OrderStatus{
+        public const string Sent = "Đã gửi";
+        public const string Received = "Đã nhận";
+        public const string onShipping = "Đang giao";
+        public const string Shipped = "Đã giao";
+        public const string Cancel = "Đã hủy";
+    }
+
     public static class Response{
     public static IDictionary<string,object> ControlerResponse(int statusCode, string msg = null){
         var result = new {type = statusCode, message = msg};

@@ -39,6 +39,9 @@ export abstract class ClientComponentBase{
   get userId(){
     return this.userService.UserId;
   }
+  isManager(){
+    return this.userService.Role != RoleConst.customer;
+  }
   @ViewChild(CustomNotifier) notifier: CustomNotifier;
 
 

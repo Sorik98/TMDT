@@ -14,6 +14,12 @@ namespace WebApi.Database.Context
         public DbSet<Product> Products { get; set; }
         public DbSet<ImageUrl> ImageUrls {get; set; }
         public DbSet<Producer> Producers{ get;set; }
+
+        public DbSet<CartItem> CartItems{ get;set; }
+
+        public DbSet<Order> Orders{ get;set; }
+
+        public DbSet<OrderDetail> OrderDetails{ get;set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         { }
         protected override void OnModelCreating(ModelBuilder builder) 

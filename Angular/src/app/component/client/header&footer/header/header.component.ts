@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '@shared/service-proxies/services';
+import { RoleConst } from '@shared/const/AppConst';
 
 @Component({
   selector: 'app-header',
@@ -19,7 +20,9 @@ export class HeaderComponent implements OnInit {
     this.userService.login();
      //this.oauthService.initImplicitFlow();
     }
-
+  isManager(){
+    return this.userService.Role != RoleConst.customer;
+    }
   logout() {
       this.userService.logout();
     }
@@ -30,6 +33,9 @@ export class HeaderComponent implements OnInit {
   isLogin(){
   
     return this.userService.isLogin();
+  }
+  cartItemsNum(){
+    return this.userService.Cart.length;
   }
 }
   

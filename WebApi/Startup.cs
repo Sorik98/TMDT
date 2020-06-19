@@ -158,6 +158,8 @@ namespace WebApi
           //  services.AddScoped<IPaymentDetailRepository, PaymentDetailRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProducerRepository, ProducerRepository>();
+            services.AddScoped<ICartRepository, CartRepository>();
+             services.AddScoped<IOrderRepository, OrderRepository>();
         }
     }
 }

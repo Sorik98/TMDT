@@ -9,7 +9,8 @@ import { authConfig, RoleConst, AppConsts } from '@shared/const/AppConst';
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 import { MatSidenav } from '@angular/material/sidenav';
 import { HttpClient, HttpResponseBase, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { ApiException } from './service-proxies';
+import { ApiException, CartServiceProxy, CartItemDTO, OrderServiceProxy, OrderDTO } from './service-proxies';
+import { ITS_JUST_ANGULAR } from '@angular/core/src/r3_symbols';
 
 @Injectable()
 export class UserService {
@@ -18,14 +19,18 @@ export class UserService {
     private user = new User();
     private name = new Subject<string>();
     private login_ = false;
+    private cart: CartItemDTO[] = [];
     // Observable stream
     name$ = this.name.asObservable();
 
-    constructor(private oauthService: OAuthService) {
+    constructor(private oauthService: OAuthService,
+                private cartService: CartServiceProxy,
+                private orderService: OrderServiceProxy,
+                ) {
         this.iniUserWithTokens();
         this.addOAuthServiceEventObservable();
     }
-
+    cartActionFinish = false;
     get Name(){
         return this.user.name;
     }
@@ -39,21 +44,92 @@ export class UserService {
     get UserId(){
         return this.user.id;
     }
+    get Cart(){
+        return this.cart;
+    }
+    
     isLogin(){
         return this.login_;
     }
 
     login() {
         this.oauthService.initCodeFlow();
+        // this.cartService.getUserCart(this.UserId).subscribe(res => {
+        //     this.cart = res;
+        // })
         //this.oauthService.initImplicitFlow();
-    }
 
+    }
+    addToCart(item: CartItemDTO)
+    {
+        if(!this.cartActionFinish){
+            alert("Thao tác giỏ hàng chưa thực hiện xong!");
+            return;
+        }
+        this.cartActionFinish = false;
+        var index = this.cart.findIndex(i => i.product.id == item.product.id);
+        if(index == -1)
+        this.cart.push(item);
+        else
+        this.cart[index].quantity += item.quantity;
+        this.createCart(this.cart);
+    }
+    reloadCart(){
+        this.cartService.getUserCart(this.UserId).subscribe(res => {
+            this.cart = res;
+        })
+    }
+    private initCart(){
+        this.cartService.getUserCart(this.UserId).subscribe(res => {
+            this.cart = res;
+            this.cartActionFinish = true;
+        })
+    }
+    private createCart(cart: CartItemDTO[]){
+        var j = 0;
+        for(var i=0;i<cart.length;i++)
+        {
+        if(cart[i].id)
+        {
+        this.cartService.update(cart[i]).subscribe(res => {
+            if(res.result.type == 200)
+            {
+                console.log("success "+res.result.message);
+            }
+            else console.log("Error: " + res.result.message)
+            if(++j == cart.length)this.initCart();
+        })
+        }
+        else
+        {
+        this.cartService.create(cart[i]).subscribe(res => {
+            if(res.result.type == 200)
+            {
+               console.log("success "+res.result.message);
+             }
+           else console.log("Error: " + res.result.message)
+           if(++j == cart.length)this.initCart();
+        })
+        }
+    
+        }
+    }
+    deleteCart(ids: number[]){
+       return this.cartService.deleteRange(ids);
+    }
+    deleteItem(id: number){
+        return this.cartService.delete(id);
+     }
     logout() {
         this.oauthService.logOut();
     }
 
     hasAdminAccessPermission(){
         return this.user.role != RoleConst.customer;
+    }
+
+    createOrder(order: OrderDTO){
+       return  this.orderService.create(order);
     }
     /* #endregion */
 
@@ -65,7 +141,9 @@ export class UserService {
         return (this.oauthService.hasValidIdToken() && this.oauthService.hasValidAccessToken());
     }
     private iniUserWithTokens() {
-        if (!this.tokensIsValid()) return;
+        if (!this.tokensIsValid())
+        return;
+            
         let tokenDecode: any;
         tokenDecode = jwtDecode(this.oauthService.getIdToken())
         this.user.name = tokenDecode.name;
@@ -80,6 +158,7 @@ export class UserService {
         this.name.next(this.user.name);
 
         this.login_ = true;
+        this.initCart();
     }
 
     private addOAuthServiceEventObservable() {

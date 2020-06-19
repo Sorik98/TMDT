@@ -6,6 +6,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ClientComponent } from './client.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { CartComponent } from './cart/cart.component';
+import { OrderHistoryComponent } from './order-history/order-history.component';
 
 
 const clientRoutes: Routes = [
@@ -15,6 +17,8 @@ const clientRoutes: Routes = [
         children: [
             //{ path: 'payment-detail', component: PaymentDetailComponent },
             { path: 'home', component: HomeComponent },
+            { path: 'cart', component: CartComponent },
+            { path: 'order', component: OrderHistoryComponent },
             { path: 'product/:type', component: ProductListComponent},
             { path: 'product/:type/:id', component: ProductDetailComponent},
             { path: '', redirectTo: 'home', pathMatch: 'full' },

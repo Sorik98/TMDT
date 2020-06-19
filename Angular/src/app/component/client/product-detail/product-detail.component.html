@@ -6,22 +6,52 @@
       <div class="col-lg-3">
         <h1 class="my-4">HHP</h1>
         <div class="list-group">
-          <a href="#" class="list-group-item active">Laptop</a>
-          <a href="#" class="list-group-item">Keyboard</a>
-          <a href="#" class="list-group-item">Mouse</a>
+          <a *ngFor="let key of getObjectKeys(ProductType)" [routerLink]="['/product', ProductType[key]]" class="list-group-item">{{ProductType[key]}}</a>
         </div>
       </div>
       <!-- /.col-lg-3 -->
-
       <div class="col-lg-9">
-
+      <ngb-carousel class ="custom-carousel">
+        <ng-template ngbSlide *ngFor="let image of product.imageUrls">
+          <div class="picsum-img-wrapper">
+            <img [src]="image.url" alt="image">
+          </div>
+          <!-- <div class="carousel-caption">
+            <h3>First slide label</h3>
+            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+          </div> -->
+        </ng-template>
+      </ngb-carousel>
+      <div>
+        
         <div class="card mt-4">
-          <img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">
+          
           <div class="card-body">
             <h3 class="card-title">{{product.name}}</h3>
-            <h5>{{product.originalPrice}} Sale: {{product.sale}}</h5>
-            <h4>{{product.price}}</h4>
-            <div class="card-text">{{product.shortDesc}} </div>
+            <div *ngIf="product.sale != 0">
+              <div class="card-origin-price">
+                <div class=" text-deleted">{{product.originalPrice | moneyFormatPipe}}</div>
+                <div class="card-curency-unit">VNĐ</div>
+                <div class="card-sale">-{{product.sale}}%</div>
+              </div> 
+              <div class="card-price">
+               <div class="price">{{product.price | moneyFormatPipe}}</div>
+                <div class="card-curency-unit">VNĐ</div>
+              </div>
+
+            </div>
+            <div *ngIf="product.sale == 0">
+            <div class="card-price">
+              <div class="price">{{product.price | moneyFormatPipe}}</div>
+              <div class="card-curency-unit">VNĐ</div>
+          </div>
+            </div>
+            <div class="card-text card-short-desc">{{product.shortDesc}}
+            </div>
+            <input type="number"  [(ngModel)]="Quantity" (change)="quantityChange()">
+            <div style="float: right;">
+              <button mat-raised-button color="primary" (click)="addToCart(Quantity)">Thêm vào giỏ hàng</button>
+            </div>
           </div>
         </div>
         <!-- /.card -->
@@ -38,7 +68,7 @@
 
       </div>
       <!-- /.col-lg-9 -->
-
+</div>
     </div>
 
   </div>

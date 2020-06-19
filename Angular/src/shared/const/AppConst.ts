@@ -43,3 +43,10 @@ export enum ProductType{
 export enum ServerFolder{
     Image = "Image",
 }
+export enum OrderStatus{
+  Sent = "Đã gửi",
+  Received = "Đã nhận",
+  onShipping = "Đang giao",
+  Shipped = "Đã giao",
+  Cancel = "Đã hủy"
+}

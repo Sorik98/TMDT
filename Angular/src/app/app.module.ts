@@ -6,7 +6,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { OAuthModule, OAuthStorage, OAuthService } from 'angular-oauth2-oidc';
 import { TokenInterceptor } from '@shared/helpers/http-handle/TokenInterceptor';
-import { API_BASE_URL } from '@shared/service-proxies/service-proxies';
+import { API_BASE_URL, CartServiceProxy, OrderServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppConsts } from '@shared/const/AppConst';
 import { UserService, OAuthConfigService } from '@shared/service-proxies/services';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -32,6 +32,8 @@ export function getRemoteServiceBaseUrl(): string {
     OAuthConfigService,
     //user services
     UserService,
+    CartServiceProxy,
+    OrderServiceProxy,
     //API BASE
     { provide: API_BASE_URL, useFactory: getRemoteServiceBaseUrl },
     //HTTP Client

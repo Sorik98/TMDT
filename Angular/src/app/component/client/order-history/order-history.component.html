@@ -1,0 +1,32 @@
+<div class="row order-page-body">
+    <div class="col-md-12">
+        <custom-notifier></custom-notifier>
+    </div>
+    <div class="col-md-10 offset-md-1">
+    
+        <div class="col-md-12  order-item" *ngFor="let order of orders">
+            <div class="row align-items-center" *ngFor="let item of order.orderDetails">
+            <div class="col-md-2"><img class="img" src="{{item.image.url}}"></div>
+            <div class="col-md-3">
+            <div class="name">{{item.productName}}</div>
+            <div>Số lượng: <span class="producer-name">{{item.quantity}}</span></div>
+            <!-- <div >Giá: <span class="price">{{item.product.price | moneyFormatPipe}} </span>VNĐ</div>
+            <div >Số lượng <span class="quantity">{{item.quantity}}</span></div>
+            <div>Tổng cộng <span class="total">{{item.product.price*item.quantity | moneyFormatPipe}}</span> VNĐ</div> -->
+            </div>
+            </div>
+            <div>{{order.receiverAddress}}</div>
+            <div>{{order.receiverName}}</div>
+            <div>{{order.receiverPhone}}</div>
+            <div>{{order.status}}</div>
+        </div>
+    </div>
+  
+</div>
+
+
+  
+
+  
+  
+  
