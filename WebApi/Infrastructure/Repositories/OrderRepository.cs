@@ -28,6 +28,7 @@ namespace WebApi.Infrastructure.Repositories
             var orders = await _context.Orders.Where(i => i.UserId == userId)
             .Include(i => i.OrderDetails).ThenInclude(i => i.Product).ThenInclude(p => p.ImageUrls)
             .Include(i => i.OrderDetails).ThenInclude(i => i.Product.Producer)
+            .OrderByDescending(o => o.CreateDate)
             .ToListAsync();
 
             return orders;
@@ -38,6 +39,7 @@ namespace WebApi.Infrastructure.Repositories
             var orders = await _context.Orders
             .Include(i => i.OrderDetails).ThenInclude(i => i.Product).ThenInclude(p => p.ImageUrls)
             .Include(i => i.OrderDetails).ThenInclude(i => i.Product.Producer)
+            .OrderByDescending(o => o.CreateDate)
             .ToListAsync();
 
             return orders;
@@ -48,6 +50,7 @@ namespace WebApi.Infrastructure.Repositories
             return await _context.Orders.Where(p => p.Id == id)
             .Include(i => i.OrderDetails).ThenInclude(i => i.Product).ThenInclude(p => p.ImageUrls)
             .Include(i => i.OrderDetails).ThenInclude(i => i.Product.Producer)
+            .OrderByDescending(o => o.CreateDate)
             .FirstOrDefaultAsync();
         }
         public async Task<int> Create(Order order)

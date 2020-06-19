@@ -4,7 +4,7 @@
     </div>
     <div class="col-md-10 offset-md-1">
         <mat-accordion>
-            <mat-expansion-panel class="col-md-12" *ngFor="let order of orders" class="order-item">
+            <mat-expansion-panel class="col-md-12" *ngFor="let order of orders; let first = first" class="order-item" [expanded]="first">
               <mat-expansion-panel-header class="row">
                 <mat-panel-title class="col-md-2 create-date">
                   {{order.createDate | dateTimeFormatPipe}}
@@ -28,14 +28,16 @@
                 <div class="col-md-3">
                 <div class="name" [routerLink]="['/product',item.productType,item.productId]">{{item.productName}}</div>
                 <div>Số lượng: <span>{{item.quantity}}</span></div>
-                <div>Đơn giá: <span>{{item.productPrice | moneyFormatPipe}}</span></div>
+                <div>Đơn giá: <span>{{item.productPrice | moneyFormatPipe}} VNĐ</span></div>
                 <!-- <div >Giá: <span class="price">{{item.product.price | moneyFormatPipe}} </span>VNĐ</div>
                 <div >Số lượng <span class="quantity">{{item.quantity}}</span></div>
                 <div>Tổng cộng <span class="total">{{item.product.price*item.quantity | moneyFormatPipe}}</span> VNĐ</div> -->
+                <hr>
+                <div class="item-total"><span>{{item.productPrice*item.quantity | moneyFormatPipe}} VNĐ</span></div>
                 </div>
             </div>
-            <div class="text-right total">Tổng cộng: <span class="total-price">{{order.totalPrice | moneyFormatPipe}} VNĐ</span></div>
-            <div class="text-right"><button mat-raised-button color="accent" *ngIf="cancellable(order)">Hủy đơn hàng</button></div>
+            <div class="text-right total">Tổng cộng: &nbsp; &nbsp;<span class="total-price">{{order.totalPrice | moneyFormatPipe}}</span> VNĐ</div>
+            <div class="text-right" style="margin-top: 10px;"><button mat-raised-button color="accent" *ngIf="cancellable(order)" (click)="cancelOrder(order.id)">Hủy đơn hàng</button></div>
             </mat-expansion-panel>
             
           </mat-accordion>

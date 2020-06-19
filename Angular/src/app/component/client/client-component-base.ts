@@ -22,14 +22,13 @@ export abstract class ClientComponentBase{
 
                 
   }
-  itemsPerPage = [5,10,15];
-  toolTip = {
-      position: "after",
-      showDelay: 2700,
-      hideDelay: 300
-  };
+  pageSize = 5;
+  page = 1;
   saving = false;
   AuthStatus = AuthStatus;
+  getPageLength(array: any[]){
+    return array.length;
+  }
   get userName() {
       return this.userService.Name;
   }

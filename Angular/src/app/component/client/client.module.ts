@@ -14,7 +14,7 @@ import { UserService } from '@shared/service-proxies/services';
 import { SharedModule } from '@shared/component/shared.module';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
-import {  NgbCarouselModule, NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
+import {  NgbCarouselModule, NgbModalModule, NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { CartComponent } from './cart/cart.component';
 import {MatBadgeModule} from '@angular/material/badge';
@@ -48,7 +48,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatButtonModule,
     MatBadgeModule,
     MatInputModule,
-    MatExpansionModule
+    MatExpansionModule,
+    NgbPaginationModule,
   ],
   providers: [
     /* #region  service-proxies */

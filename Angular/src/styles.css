@@ -282,3 +282,15 @@ display: inline-block;
     height: 100%;
     overflow: hidden;
 }
+.order-item .item-total{
+    font-weight: 550;
+    font-size: 15px;
+}
+.order-item .total-price{
+    font-weight: 600;
+    font-size: 22px;
+    color: rgba(255, 11, 11, 0.802);
+}
+.order-item hr{
+    border: 1px solid rgba(0, 0, 255, 0.387);
+}

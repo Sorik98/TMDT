@@ -38,7 +38,7 @@ namespace WebApi.Controllers
             {
                 return null;
             }
-    
+
             List<OrderDTO> orders_result = new List<OrderDTO>();
             foreach(Order item in orders)
             {

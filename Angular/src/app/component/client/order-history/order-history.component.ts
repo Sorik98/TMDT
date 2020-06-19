@@ -30,5 +30,13 @@ export class OrderHistoryComponent extends ClientComponentBase implements OnInit
   cancellable(order: OrderDTO){
     return order.status == OrderStatus.Sent;
   }
- 
+  cancelOrder(id: number){
+      this.orderService.cancelOrder(id,this.userId).subscribe(res => {
+        if(res.result.type == 200){
+          this.alert("success",res.result.message);
+          this.ngOnInit();
+        }
+        else this.alert("danger","Failed cancel order. Error: " + res.result.message)
+      })
+  }
 }
