@@ -9,8 +9,27 @@
 
     <!-- Page Features -->
     <div class="row">
+      <div class = "col-md-3 offset-md-3">
+        <mat-form-field>
+          <mat-label>Producer</mat-label>
+          <mat-select [(ngModel)]="filterInput.producerId" >
+            <mat-option [value]="null" >Tất cả </mat-option>
+            <mat-option *ngFor="let producer of producers" [value]="producer.producerId">{{producer.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-5">
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input  matInput placeholder="Product name" [(ngModel)]="filterInput.name" >
+        </mat-form-field>    
+      </div> 
+      <div class="col-md-1 align-self-center">
+      <button mat-stroked-button color="primary" type="button" (click)="onSearch()">Search</button>
+    </div>
 
-      <div class="col-lg-4 col-md-6 mb-4" *ngFor="let product of products">
+
+      <div class="col-lg-4 col-md-6 mb-4" *ngFor="let product of displayList | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
         <div class="card h-100">
           <a [routerLink]="['/product',product.type,product.id]"><img class="card-img-top" src="{{product.imageUrls[0].url}}" alt=""></a>
           <div class="card-body">
@@ -43,7 +62,11 @@
 
         </div>
       </div>
-
+      <div class="col-md-12">
+        <div class="custom-paginator">
+        <ngb-pagination  [(page)]="page" [pageSize]="pageSize" [collectionSize]="displayList.length"></ngb-pagination>
+      </div>
+      </div>
       
 
     </div>

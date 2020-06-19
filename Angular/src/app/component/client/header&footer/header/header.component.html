@@ -13,7 +13,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link">About</a>
+            <a class="nav-link" routerLink="/about">About</a>
           </li>
           <li class="nav-item">
             <a class="nav-link">Service</a>
@@ -33,7 +33,7 @@
                 <button class="dropdown-item" type="button" routerLink="/admin" *ngIf="isManager()">Go to Admin Page</button>
                 <button class="dropdown-item" type="button" matBadge="{{cartItemsNum()}}" matBadgePosition="before" matBadgeColor="accent" routerLink="/cart">Cart</button>
                 <button class="dropdown-item" type="button" routerLink="/order">Orders History</button>
-                <button class="dropdown-item" type="button">Another action</button>
+                <button class="dropdown-item" type="button" routerLink="/settings">Settings</button>
                 <button class="dropdown-item" type="button" (click)="logout()">Sign out</button>
               </div>
             </div>

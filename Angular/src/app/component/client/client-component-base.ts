@@ -22,7 +22,8 @@ export abstract class ClientComponentBase{
 
                 
   }
-  pageSize = 5;
+  filterInput: any;
+  pageSize = 6;
   page = 1;
   saving = false;
   AuthStatus = AuthStatus;

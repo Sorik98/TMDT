@@ -21,8 +21,11 @@ import {MatBadgeModule} from '@angular/material/badge';
 import { MatInput, MatInputModule } from '@angular/material/input';
 import { OrderHistoryComponent } from './order-history/order-history.component';
 import {MatExpansionModule} from '@angular/material/expansion';
-
-
+import { MatSelectModule } from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatMomentDateModule } from "@angular/material-moment-adapter";
+import { SettingComponent } from './setting/setting.component';
+import { AboutComponent } from './about/about.component';
 @NgModule({
   declarations: [
     //PaymentDetailComponent,
@@ -33,7 +36,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     ProductDetailComponent,
     CartComponent,
     OrderHistoryComponent,
-    
+    SettingComponent,
+    AboutComponent,
     PageNotFoundComponent,
     ClientComponent
   ],
@@ -50,11 +54,20 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatInputModule,
     MatExpansionModule,
     NgbPaginationModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatMomentDateModule 
   ],
   providers: [
     /* #region  service-proxies */
     // San pham
     ApiServiceProxies.ProductServiceProxy,
+
+    // Nha san xuat
+    ApiServiceProxies.ProducerServiceProxy,
+
+    // User
+    ApiServiceProxies.UserServiceProxy,
     //Gio hang
     
     //Thong tin hoa don

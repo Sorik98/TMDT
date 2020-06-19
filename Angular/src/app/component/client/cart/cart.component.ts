@@ -20,6 +20,7 @@ export class CartComponent extends ClientComponentBase implements OnInit {
     }
   order: OrderDTO = new OrderDTO();
   saveBtnDisable = false;
+  pageSize = 5;
   ngOnInit(): void {
 
   }

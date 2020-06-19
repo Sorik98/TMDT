@@ -4,6 +4,7 @@ export class User{
     emailVerified: string;
     phone : string;
     phoneVerified: string;
+    address: string;
     id: string;  
     role: string; 
 }

@@ -47,6 +47,12 @@ export class UserService {
     get Cart(){
         return this.cart;
     }
+    get Address(){
+       return this.user.address;
+    }
+    get Phone(){
+        return this.user.phone;
+    }
     
     isLogin(){
         return this.login_;
@@ -152,6 +158,7 @@ export class UserService {
         this.user.phone = tokenDecode.phone_number;
         this.user.phoneVerified = tokenDecode.phone_number_verified;
         this.user.id = tokenDecode.sub;
+        this.user.address = tokenDecode.address;
         tokenDecode = jwtDecode(this.oauthService.getAccessToken())
         this.user.role = tokenDecode.role;
         //set observable stream

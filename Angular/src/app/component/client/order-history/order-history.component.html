@@ -3,8 +3,39 @@
         <custom-notifier></custom-notifier>
     </div>
     <div class="col-md-10 offset-md-1">
+      <div class="row">
+      <div class = "col-md-3 ">
+        <mat-form-field>
+          <mat-label>Trạng thái</mat-label>
+          <mat-select [(ngModel)]="filterInput.status">
+            <mat-option [value]="null" >Tất cả </mat-option>
+            <mat-option *ngFor="let key of getObjectKeys(OrderStatus)" [value]="OrderStatus[key]">{{OrderStatus[key]}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field>
+          <mat-label>Từ ngày</mat-label>
+          <input matInput [matDatepicker]="picker1" [(ngModel)]="filterInput.fromDate">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+      </div> 
+      <div class="col-md-4">
+        <mat-form-field>
+          <mat-label>Đến ngày</mat-label>
+          <input matInput [matDatepicker]="picker2" [(ngModel)]="filterInput.toDate">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>  
+      </div> 
+        <div class="col-md-1 align-self-center">
+        <button mat-stroked-button color="primary" type="button" (click)="onSearch()">Search</button>
+        </div>
+    </div>
         <mat-accordion>
-            <mat-expansion-panel class="col-md-12" *ngFor="let order of orders; let first = first" class="order-item" [expanded]="first">
+            <mat-expansion-panel class="col-md-12" *ngFor="let order of displayList 
+            | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let first = first" class="order-item" [expanded]="first">
               <mat-expansion-panel-header class="row">
                 <mat-panel-title class="col-md-2 create-date">
                   {{order.createDate | dateTimeFormatPipe}}
@@ -42,7 +73,12 @@
             
           </mat-accordion>
     
-        
+         
+    </div>
+    <div class="col-md-12" style="margin-top: 10px;">
+      <div class="custom-paginator">
+      <ngb-pagination  [(page)]="page" [pageSize]="pageSize" [collectionSize]="displayList.length"></ngb-pagination>
+    </div>
     </div>
   
 </div>

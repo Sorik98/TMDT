@@ -7,6 +7,7 @@ import { ProductType } from '@shared/const/AppConst';
 import { MatSort } from '@angular/material/sort';
 import { ThrowStmt } from '@angular/compiler';
 import { FileService } from '@shared/service-proxies/services';
+import * as moment from 'moment'
 
 @Component({
   templateUrl: 'product.component.html',
@@ -37,8 +38,18 @@ export class ProductComponent extends AdminComponentBase implements OnInit {
     this.initFilter();
     this.initCombobox();
     this.getProducts();
+    this.initSortColumn();
   }
-
+  initSortColumn(){
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'createDate': return  moment(item.createDate);
+        case 'authDate': return  moment(item.authDate);
+        case 'lastUpdateDate': return  moment(item.lastUpdateDate);
+        default: return item[property];
+      }
+    };
+  }
   initFilter() {
     this.setDefaultFilter();
     super.initFilter();

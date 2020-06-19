@@ -17,7 +17,7 @@ export class HomeComponent extends ClientComponentBase implements OnInit {
    }
 
    ProductType = ProductType;
-   products: ProductDTO[];
+   products: ProductDTO[] = [];
    productNum = 10;
 
   ngOnInit(): void {
@@ -25,7 +25,7 @@ export class HomeComponent extends ClientComponentBase implements OnInit {
   }
 
   getLatestProducts(){
-    this.productService.getLatestProducts(10).subscribe(res => {
+    this.productService.getLatestProducts(15).subscribe(res => {
       this.products = res;
     })
   }

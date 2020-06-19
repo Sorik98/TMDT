@@ -18,6 +18,14 @@ export class OrderHistoryComponent extends ClientComponentBase implements OnInit
     console.log(this);
    }
   orders: OrderDTO[];
+  displayList: OrderDTO[]=[];
+  pageSize = 5;
+  OrderStatus = OrderStatus;
+  filterInput = {
+    status: null,
+    fromDate: null,
+    toDate: null
+  };
   ngOnInit(): void {
     this.getOrders()
 
@@ -25,6 +33,7 @@ export class OrderHistoryComponent extends ClientComponentBase implements OnInit
   getOrders(){
       this.orderService.getUserOrders(this.userId).subscribe(res => {
           this.orders = res;
+          this.displayList = this.orders;
       });
   }
   cancellable(order: OrderDTO){
@@ -38,5 +47,14 @@ export class OrderHistoryComponent extends ClientComponentBase implements OnInit
         }
         else this.alert("danger","Failed cancel order. Error: " + res.result.message)
       })
+  }
+  onSearch()
+  {
+   this.displayList = this.orders.filter((p)=>{
+              var a = (this.filterInput.status == null ||  this.filterInput.status == undefined) ? true : p.status == this.filterInput.status;
+              var b = (this.filterInput.fromDate == null ||  this.filterInput.fromDate == undefined) ? true : p.createDate.isAfter(this.filterInput.fromDate);
+              var c = (this.filterInput.toDate == null ||  this.filterInput.toDate == undefined) ? true : p.createDate.isBefore(this.filterInput.toDate);
+              return a&&b&&c;
+                                  });
   }
 }

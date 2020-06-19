@@ -4,23 +4,30 @@
     </div>
     <div class="col-md-10 offset-md-1">
     
-        <div class="row align-items-center cart-item" *ngFor="let item of cart">
+        <div class="row align-items-center cart-item" *ngFor="let item of cart | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
             <div class="col-md-3"><span class="cross" (click)="onDeleteItem(item.id)">&#10060;</span><img class="product-list-img" src="{{item.product.imageUrls[0].url}}"></div>
             <div class="col-md-3">
-            <div class="name">{{item.product.name}}</div>
+            <div class="name" [routerLink]="['/product',item.product.type,item.product.id]">{{item.product.name}}</div>
             <div>Nhà sản xuất: <span class="producer-name">{{item.product.producerName}}</span></div>
             <div >Giá: <span class="price">{{item.product.price | moneyFormatPipe}} </span>VNĐ</div>
             <div >Số lượng <span class="quantity">{{item.quantity}}</span></div>
             <div>Tổng cộng <span class="total">{{item.product.price*item.quantity | moneyFormatPipe}}</span> VNĐ</div>
             </div>
         </div>
+        <div *ngIf="cart.length != 0" class="row">
+          <div class="col-md-12" style="margin-top: 15px;">
+            <div class="text-right">
+              <button mat-raised-button color="primary" (click)="open(content)">Đặt hàng</button>
+              <button mat-raised-button color="warn" style="margin-left: 10px;" (click)="onDeleteCart()">Xóa giỏ hàng</button>
+            </div>
+          </div>
+          <div class="col-md-12" style="margin-top: 10px;">
+            <div class="custom-paginator">
+            <ngb-pagination  [(page)]="page" [pageSize]="pageSize" [collectionSize]="cart.length"></ngb-pagination>
+            </div>
+          </div>
+        </div>
     </div>
-  
-    <div class="col-md-5 offset-md-4">
-        <button mat-raised-button color="primary" (click)="open(content)">Đặt hàng</button>
-        <button mat-raised-button color="warn" style="margin-left: 20px;" (click)="onDeleteCart()">Xóa giỏ hàng</button>
-    </div>
-    
 </div>
 
 <ng-template #content let-modal>

@@ -8,6 +8,8 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { CartComponent } from './cart/cart.component';
 import { OrderHistoryComponent } from './order-history/order-history.component';
+import { SettingComponent } from './setting/setting.component';
+import { AboutComponent } from './about/about.component';
 
 
 const clientRoutes: Routes = [
@@ -19,6 +21,8 @@ const clientRoutes: Routes = [
             { path: 'home', component: HomeComponent },
             { path: 'cart', component: CartComponent },
             { path: 'order', component: OrderHistoryComponent },
+            { path: 'settings', component:SettingComponent },
+            { path: 'about', component:AboutComponent },
             { path: 'product/:type', component: ProductListComponent},
             { path: 'product/:type/:id', component: ProductDetailComponent},
             { path: '', redirectTo: 'home', pathMatch: 'full' },
