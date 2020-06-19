@@ -28,12 +28,18 @@ constructor(public auth: OAuthService) {}
  */
 intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    request = request.clone({
-       setHeaders: {
-           Authorization: `Bearer ${this.auth.getAccessToken()}`
-       }
-    });
-
-    return next.handle(request);
-  }
+      if(this.auth.hasValidIdToken() && this.auth.hasValidAccessToken())
+      {
+        request = request.clone({
+          setHeaders: {
+              Authorization: `Bearer ${this.auth.getAccessToken()}`
+          }
+        });
+      }
+      else
+      request = request.clone()
+      
+      return next.handle(request);
+      
+    }
 }

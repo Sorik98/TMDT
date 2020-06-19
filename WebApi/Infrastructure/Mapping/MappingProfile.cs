@@ -228,7 +228,8 @@ namespace WebApi.Infrastructure.Mapping
                  ReceiverName = order.ReceiverName,
                  ReceiverPhone = order.ReceiverPhone,
                  Status = order.Status,
-                 UserId = order.UserId
+                 UserId = order.UserId,
+                 TotalPrice = order.TotalPrice,
             };
         }
 
@@ -267,6 +268,8 @@ namespace WebApi.Infrastructure.Mapping
                 ProductName = orderDetail.Product.Name,
                 ProductId = orderDetail.ProductId,
                 Quantity = orderDetail.Quantity,
+                ProductType = orderDetail.Product.Type,
+                ProductPrice = orderDetail.Product.Price
             };
         }
         public static OrderDetail ToOrderDetail(this OrderDetailDTO dto)

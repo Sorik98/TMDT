@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit {
     return this.userService.isLogin();
   }
   cartItemsNum(){
-    return this.userService.Cart.length;
+    return this.userService.Cart.length == 0? null : this.userService.Cart.length;
   }
 }
   

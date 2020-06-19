@@ -16,6 +16,10 @@ namespace WebApi.Infrastructure.DTOs{
 
         public string ProductName {get;set;}
 
+        public decimal? ProductPrice { get; set; }
+
+        public string ProductType {get;set;}
+
         public ImageUrlDTO Image {get;set;}
 
 

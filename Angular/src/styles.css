@@ -266,3 +266,19 @@ display: inline-block;
     font-size: 20px;
     cursor: pointer;
 }
+.order-item .create-date{
+    color: rgb(17, 17, 235);
+    font-weight: 400;
+}
+.order-item .status{
+    color: rgb(80, 80, 84);
+    font-weight: 500;
+    font-size: 18px;
+}
+.order-item .receiver-name{
+    font-size: 18px;
+}
+.order-item .receiver-address{
+    height: 100%;
+    overflow: hidden;
+}

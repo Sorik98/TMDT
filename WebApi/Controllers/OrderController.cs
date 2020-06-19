@@ -96,9 +96,12 @@ namespace WebApi.Controllers
         {
            // var user = User.;
            try{
+               if(orderDTO.OrderDetails == null || orderDTO.OrderDetails.Count == 0)
+               return Const.Response.ControlerResponse(Const.StatusCode.BadRequest);
             var order = orderDTO.ToOrder();  
             order.Status = OrderStatus.Sent;
             order.CreateDate = DateTime.Now;
+        
             await _orderRepo.Create(order);
             return  Const.Response.ControlerResponse(Const.StatusCode.OK,"Action complete successfully");
            }

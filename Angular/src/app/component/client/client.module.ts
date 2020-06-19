@@ -20,6 +20,7 @@ import { CartComponent } from './cart/cart.component';
 import {MatBadgeModule} from '@angular/material/badge';
 import { MatInput, MatInputModule } from '@angular/material/input';
 import { OrderHistoryComponent } from './order-history/order-history.component';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { OrderHistoryComponent } from './order-history/order-history.component';
     NgbModalModule,
     MatButtonModule,
     MatBadgeModule,
-    MatInputModule
+    MatInputModule,
+    MatExpansionModule
   ],
   providers: [
     /* #region  service-proxies */

@@ -28,6 +28,7 @@ namespace WebApi.Infrastructure.DTOs{
         public string Status { get; set; }
 
 
+        public decimal? TotalPrice { get; set;}
 
         public List<OrderDetailDTO> OrderDetails { get; set; }
 

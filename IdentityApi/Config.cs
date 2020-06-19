@@ -54,7 +54,7 @@ namespace IdentityApi
                     AllowedGrantTypes = GrantTypes.Code,
                     RequireConsent = false,
                     RequirePkce = true,
-
+                    
                     // // where to redirect to after login
                      RedirectUris = { "http://localhost:4200/home" },
 

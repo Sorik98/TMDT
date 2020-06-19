@@ -36,9 +36,12 @@ namespace WebApi.Infrastructure.Models
         public string ReceiverPhone { get; set; }
 
         [Required]
-        [Column(TypeName = "varchar(20)")]
+        [Column(TypeName = "nvarchar(20)")]
         public string Status { get; set; }
 
+        [Required]
+        [Column(TypeName = "decimal(18,0)")]
+        public decimal TotalPrice { get; set; }
 
 
         [Required]

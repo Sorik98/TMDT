@@ -54,6 +54,9 @@ namespace WebApi.Infrastructure.Repositories
         {
             var result = await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
+            var order_ = await GetBy(order.Id);
+            order_.TotalPrice = order_.OrderDetails.Sum(i => i.Product.Price*i.Quantity);
+            await Update(order_);
             return order.Id;
         }
         public async Task Update(Order order)

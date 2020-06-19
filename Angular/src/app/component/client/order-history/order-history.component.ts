@@ -1,6 +1,7 @@
 import { Component, OnInit, Injector } from '@angular/core';
 import { ClientComponentBase } from '../client-component-base';
 import { OrderServiceProxy, OrderDTO } from '@shared/service-proxies/service-proxies';
+import { OrderStatus } from '@shared/const/AppConst';
 
 
 @Component({
@@ -25,6 +26,9 @@ export class OrderHistoryComponent extends ClientComponentBase implements OnInit
       this.orderService.getUserOrders(this.userId).subscribe(res => {
           this.orders = res;
       });
+  }
+  cancellable(order: OrderDTO){
+    return order.status == OrderStatus.Sent;
   }
  
 }
