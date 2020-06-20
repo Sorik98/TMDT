@@ -10,5 +10,6 @@ namespace WebApi.Infrastructure.Interfaces
     public interface IProducerRepository : IRepository<Producer>
     {
         Task<IEnumerable<Producer>> GetAllProducts(int id);
+        Task Approve(bool isApprove, int id, string user);
     }
 }

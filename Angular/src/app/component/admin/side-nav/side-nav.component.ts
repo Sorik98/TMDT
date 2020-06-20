@@ -1,6 +1,15 @@
 
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { UserService, SidenavService } from '@shared/service-proxies/services';
+import { ActivatedRoute } from '@angular/router';
+
+export enum pages  {
+    
+  productList,
+  productDetail,
+  producerList,
+
+}
 
 @Component({
     selector: 'side-nav',
@@ -8,16 +17,14 @@ import { UserService, SidenavService } from '@shared/service-proxies/services';
   })
 export class SideNavigationComponent implements OnInit,AfterViewInit {
   constructor(private userService: UserService,
-              private sidenav: SidenavService 
+              private sidenav: SidenavService,
+              private activedRoute: ActivatedRoute
     ){}
-   readonly pages = {
-      product: {
-          productList: 0,
-          productDetail: 1
-      }
-  }
-  currentPage= this.pages.product.productList;
+   
+  pages = pages;
+  currentPage= pages.productList;
   ngOnInit(){
+    console.log(this);
   }
   ngAfterViewInit(){
   }

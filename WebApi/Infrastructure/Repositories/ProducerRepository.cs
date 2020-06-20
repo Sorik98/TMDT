@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using WebApi.Const;
 using WebApi.Database.Context;
 using WebApi.Infrastructure.DTOs;
 using WebApi.Infrastructure.Interfaces;
@@ -58,6 +60,15 @@ namespace WebApi.Infrastructure.Repositories
         {
             var producer = await GetBy(id);
             _context.Producers.Remove(producer);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Approve(bool isApprove, int id, string user)
+        {
+            var producer = await _context.Producers.Where(p => p.ProducerId == id).FirstOrDefaultAsync();
+            producer.AuthStatus = isApprove ? AuthStatus.Approved : AuthStatus.Rejected;
+            producer.AuthDate =  DateTime.Now;
+            producer.AuthBy = user;
             await _context.SaveChangesAsync();
         }
         /* #endregion */

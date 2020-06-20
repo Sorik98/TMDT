@@ -1,7 +1,7 @@
 import { Component, OnInit, Injector } from '@angular/core';
 import { ClientComponentBase } from '../client-component-base';
 import { ProductServiceProxy, ProductDTO, CartItemDTO, OrderDTO, OrderDetailDTO } from '@shared/service-proxies/service-proxies';
-import { ProductType } from '@shared/const/AppConst';
+import { ProductType, AppConsts } from '@shared/const/AppConst';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { finalize } from 'rxjs/operators';
 
@@ -21,6 +21,7 @@ export class CartComponent extends ClientComponentBase implements OnInit {
   order: OrderDTO = new OrderDTO();
   saveBtnDisable = false;
   pageSize = 5;
+  cartEmptyUrl = AppConsts.remoteServiceBaseUrl + "/Other/" + "cart_emty.png";
   ngOnInit(): void {
 
   }

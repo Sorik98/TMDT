@@ -5,6 +5,8 @@ import { AdminGuard } from '@shared/guard/AdminGuard';
 import { AdminComponent } from './admin.component';
 import { EditPageState } from '@shared/const/AppConst';
 import { ProductEditComponent } from './product/product-edit.component';
+import { ProducerComponent } from './producer/producer.component';
+import { ProducerEditComponent } from './producer/producer-edit.component';
 
 
 
@@ -20,7 +22,11 @@ import { ProductEditComponent } from './product/product-edit.component';
             { path: 'product-edit', component: ProductEditComponent, data: {editPageState: EditPageState.edit} },
             { path: 'product-view', component: ProductEditComponent, data: {editPageState: EditPageState.viewDetail} },
 
-
+            // Nhà sản xuất
+            { path: 'producer', component: ProducerComponent },
+            { path: 'producer-add', component: ProducerEditComponent, data: {editPageState: EditPageState.add} },
+            { path: 'producer-edit', component: ProducerEditComponent, data: {editPageState: EditPageState.edit} },
+            { path: 'producer-view', component: ProducerEditComponent, data: {editPageState: EditPageState.viewDetail} },
 
             { path: '', redirectTo: 'product', pathMatch: 'full' },
             // { path: '**', component: PageNotFoundComponent },  // Wildcard route for a 404 page

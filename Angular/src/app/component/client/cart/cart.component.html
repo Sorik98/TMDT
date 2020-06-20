@@ -1,4 +1,4 @@
-<div class="row cart-page-body">
+<div class="row cart-page-body" *ngIf="cart.length != 0">
     <div class="col-md-12">
         <custom-notifier></custom-notifier>
     </div>
@@ -71,6 +71,14 @@
   
 
   
-  <hr>
+  <div class="row cart-page-body" *ngIf="cart.length == 0">
+    <div class="col-md-12 text-center">
+        <div style="font-size: 20px;">
+          <a routerLink="/">Giỏ hàng của bạn đang trống</a>
+        </div>
+      </div>
+      <div class="col-md-12 text-center"><img [src]="cartEmptyUrl"></div>
+
+  </div>
   
   

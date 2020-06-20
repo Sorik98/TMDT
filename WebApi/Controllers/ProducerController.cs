@@ -120,34 +120,24 @@ namespace WebApi.Controllers
                 return Const.Response.ControlerResponse(Const.StatusCode.InternalServerError,e.ToString());
            }
         }
-        // [HttpPut]
-        // public async Task<IDictionary<string,object>> Update(int id, ProducerDTO paymentDTO)
-        // {
-        //     if (id != paymentDTO.PaymentId)
-        //     {
-        //         return BadRequest();
-        //     }
+        
+        [Authorize(Roles = "Admin")]
+        [HttpDelete]
+        public async Task<IDictionary<string,object>> Approve(bool isApprove, int id, string user)
+        {
+            try{
+        
+            await _producerRepo.Approve(isApprove, id, user);
 
-        //     var producer = await _producerRepo.GetBy(id);
+            return  Const.Response.ControlerResponse(Const.StatusCode.OK,"Action complete successfully");
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return Const.Response.ControlerResponse(Const.StatusCode.InternalServerError,e.ToString());
+            }
+        }
 
-        //     if (producer == null)
-        //     {
-        //         return NotFound();
-        //     }
-
-        //     paymentDTO.MapTo(producer);
-
-        //     // try
-        //     // {
-        //     //     await _producerRepo.Add(producer);
-        //     // }
-        //     // catch (DbUpdateConcurrencyException) when (!_producerRepo.MovieExists(id))
-        //     // {
-        //     //     return NotFound();
-        //     // }
-
-        //     return NoContent();
-        // }
         [Authorize(Roles = "Admin")]
         [HttpDelete]
         public async Task<IDictionary<string,object>> Delete(int id)

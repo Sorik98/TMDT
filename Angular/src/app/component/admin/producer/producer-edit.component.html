@@ -1,0 +1,50 @@
+<div class="container-fluid page-body">
+    <div class="row align-items-center">
+      <div class="col-md-12">
+        <span>
+        <button mat-button class="no-outline-button" color="primary" (click)="goBack()">Danh sách sản phẩm</button>
+        </span>
+        <span >
+          <svg class="bi bi-chevron-compact-right" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M6.776 1.553a.5.5 0 0 1 .671.223l3 6a.5.5 0 0 1 0 .448l-3 6a.5.5 0 1 1-.894-.448L9.44 8 6.553 2.224a.5.5 0 0 1 .223-.671z"/>
+          </svg>
+        </span>
+        <span style="padding: 0 16px;" [ngSwitch]="editPageState">
+          <span *ngSwitchCase="EditPageState.add">Thêm sản phẩm</span>
+          <span *ngSwitchCase="EditPageState.edit">Chỉnh sửa sản phẩm</span>
+          <span *ngSwitchCase="EditPageState.viewDetail">Chi tiết sản phẩm</span>
+        </span>
+      </div>
+      <div class="col-md-12">
+      <custom-notifier></custom-notifier>
+      </div>
+      <div class="col text-right">
+        <button mat-raised-button color="primary" (click)="onSave()" *ngIf="!isView()">Save</button>
+        <button mat-raised-button style="margin-right: 10px;" color="warn" (click)="onReject()" *ngIf="isView()" [disabled]="!isApprovable()">Reject</button>
+        <button mat-raised-button color="primary" (click)="onApprove()" *ngIf="isView()" [disabled]="!isApprovable()">Approve</button>
+      </div>
+      </div>
+          <!-- /.col-lg-3 -->
+          
+          <div class="row">
+              <div class="col-md-6">
+              <mat-form-field>
+                <mat-label>Name</mat-label>
+                <input  matInput placeholder="Producer name" [(ngModel)]="inputModel.name" [disabled]="isView()" >
+              </mat-form-field>    
+              </div> 
+             
+              <div class="col-md-12">
+              <mat-form-field>
+                <mat-label>Desciption</mat-label>
+                <textarea matInput  placeholder="Producer description" [(ngModel)]="inputModel.desc" [disabled]="isView()"  [matTextareaAutosize]="true" [matAutosizeMaxRows]="25" 
+                          [matAutosizeMinRows]="5"></textarea>
+              </mat-form-field>  
+              </div>  
+
+        </div>
+            <!-- /.card -->
+        
+          <!-- /.col-lg-9 -->
+    
+      </div>

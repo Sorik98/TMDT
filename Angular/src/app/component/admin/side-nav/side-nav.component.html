@@ -38,31 +38,27 @@
   
       <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
         <div class="card-body">
-            <mat-button-toggle  [checked]="isCurrentPage(pages.product.productList)" (change)="onToggleBtnValueChange(pages.product.productList)">Danh sách sản phẩm</mat-button-toggle >
+            <mat-button-toggle routerLink="/admin/product"  [checked]="isCurrentPage(pages.productList)" (change)="onToggleBtnValueChange(pages.productList)">Danh sách sản phẩm</mat-button-toggle >
         </div>
         <div class="card-body">
-            <mat-button-toggle  [checked]="isCurrentPage(pages.product.productDetail)" (change)="onToggleBtnValueChange(pages.product.productDetail)">Chi tiết sản phẩm</mat-button-toggle >
+            <mat-button-toggle  [checked]="isCurrentPage(pages.productDetail)" (change)="onToggleBtnValueChange(pages.productDetail)">Chi tiết sản phẩm</mat-button-toggle >
         </div>
       </div>
     </div>
     <div class="card">
       <div class="card-header" id="headingTwo">
         <h5 class="mb-0">
-          <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-            Collapsible Group Item #2
-          </button>
+          <div class="btn collapsed custom-header" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Nhà sản xuất
+          </div>
         </h5>
       </div>
+  
       <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
         <div class="card-body">
-            Item 1
+            <mat-button-toggle routerLink="/admin/producer" [checked]="isCurrentPage(pages.producerList)" (change)="onToggleBtnValueChange(pages.producerList)">Danh sách nhà sản xuất</mat-button-toggle >
         </div>
-        <div class="card-body">
-            Item 2
-        </div>
-        <div class="card-body">
-            Item 3
-        </div>
+        
       </div>
     </div>
   </div>

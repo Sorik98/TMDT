@@ -78,7 +78,7 @@
     </ng-container>
     <ng-container matColumnDef="authDate">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Auth Date </th>
-    <td mat-cell *matCellDef="let product"><div style="width: 180px"> 05/06/2020, 10:10:18 pm </div></td>
+    <td mat-cell *matCellDef="let product"><div style="width: 180px"> {{product.authDate | dateTimeFormatPipe}} </div></td>
     </ng-container>
     <ng-container matColumnDef="authBy">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Auth By </th>

@@ -24,11 +24,15 @@ import {MatInputModule} from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSortModule} from '@angular/material/sort';
+import { ProducerComponent } from './producer/producer.component';
+import { ProducerEditComponent } from './producer/producer-edit.component';
 
 @NgModule({
   declarations: [
     ProductEditComponent,
     ProductComponent,
+    ProducerComponent,
+    ProducerEditComponent,
     AdminComponent,
     SideNavigationComponent,
   ],

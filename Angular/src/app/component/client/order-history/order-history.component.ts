@@ -1,7 +1,7 @@
 import { Component, OnInit, Injector } from '@angular/core';
 import { ClientComponentBase } from '../client-component-base';
 import { OrderServiceProxy, OrderDTO } from '@shared/service-proxies/service-proxies';
-import { OrderStatus } from '@shared/const/AppConst';
+import { OrderStatus, AppConsts } from '@shared/const/AppConst';
 
 
 @Component({
@@ -26,6 +26,7 @@ export class OrderHistoryComponent extends ClientComponentBase implements OnInit
     fromDate: null,
     toDate: null
   };
+  orderEmptyUrl = AppConsts.remoteServiceBaseUrl + "/Other/" + "order_emty.png";
   ngOnInit(): void {
     this.getOrders()
 
