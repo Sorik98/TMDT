@@ -60,10 +60,10 @@ export class ProductListComponent extends ClientComponentBase implements OnInit 
   switch(this.filterInput.option)
   {
     case 0:
-      this.displayList.sort((a,b)=> a.sold - b.sold)
+      this.displayList.sort((a,b)=> b.sold - a.sold);
       break;
     case 1:
-      this.displayList.sort((a,b)=> b.sold - a.sold)
+      this.displayList.sort((a,b)=> a.sold - b.sold)
       break;
   }
   }

@@ -14,7 +14,7 @@
       <ngb-carousel class ="custom-carousel">
         <ng-template ngbSlide *ngFor="let image of product.imageUrls">
           <div class="picsum-img-wrapper">
-            <img [src]="image.url" alt="image">
+            <img class="product-detail-img" [src]="image.url" alt="image">
           </div>
           <!-- <div class="carousel-caption">
             <h3>First slide label</h3>
@@ -29,7 +29,9 @@
           <div class="card-body">
             <h3 class="card-title">{{product.name}}</h3>
             <div>
-            <span style="font-style: italic;margin-bottom: 10px;" *ngIf="product.stock <= 100">Tồn kho: &nbsp;<span class="product-stock">{{product.stock}}</span></span>
+            <span>&nbsp;</span>
+            <span style="font-style: italic;margin-bottom: 10px;" *ngIf="product.stock < 100 && product.stock > 0">Tồn kho: &nbsp;<span class="product-stock">{{product.stock}}</span></span>
+            <span class="out-of-stock" *ngIf="product.stock == 0">Hết hàng!</span>
             <span class="product-sold">Đã bán: &nbsp; <span>{{product.sold}}</span></span>
           </div>
             <div *ngIf="product.sale != 0">

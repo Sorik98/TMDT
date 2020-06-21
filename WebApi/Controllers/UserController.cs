@@ -54,7 +54,7 @@ namespace WebApi.Controllers
             }
 
             if(string.IsNullOrEmpty(user.Role)) {
-                user.Role = "Member";
+                user.Role = "Customer";
             }
 
             var a_user = new ApplicationUser 

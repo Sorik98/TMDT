@@ -33,6 +33,11 @@ export class ProductDetailComponent extends ClientComponentBase implements OnIni
     });
   }
   addToCart(num: number){
+    if(!this.isLogin())
+    {
+      alert("Bạn cần đăng nhập để thực hiện thao tác này");
+      return;
+    }
     var item = new CartItemDTO();
     item.product = this.product;
     item.quantity = num;
@@ -46,5 +51,9 @@ export class ProductDetailComponent extends ClientComponentBase implements OnIni
   }
   disableAddToCart(){
     return (this.product.stock - this.Quantity) < 0
+  }
+  isLogin(){
+  
+    return this.userService.isLogin();
   }
 }

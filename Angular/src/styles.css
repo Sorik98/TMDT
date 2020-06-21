@@ -215,8 +215,13 @@ display: inline-block;
     margin-left: 20px;
 }
 .custom-carousel img{
-    width: 40vw;
-    height: 30vh;
+    width: 400px !important;
+    height: 400px !important;
+    display: block;
+    margin: 0 auto;
+}
+.carousel-indicators li{
+    background-color: blue;
 }
 .product-list-img{
     width: 100%;
@@ -341,4 +346,18 @@ display: inline-block;
     text-align: right;
     float: right;
     font-size: 13px;
+}
+.list-page-body{
+    margin-top:20px;
+}
+.out-of-stock{
+    color: red;font-weight: 600;
+}
+.sign-up-nav-link:hover{
+color: rgb(255,255,255,0.5) !important;
+cursor: default !important;
+}
+.sign-up-nav-link>a:hover{
+    color: rgb(255,255,255,0.75);
+    cursor: pointer;
 }

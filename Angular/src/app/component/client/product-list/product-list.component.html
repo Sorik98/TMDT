@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container list-page-body">
 
 
     <!-- Page Features -->
@@ -41,6 +41,7 @@
               <a [routerLink]="['/product',product.type,product.id]">{{product.name}}</a>
             </h4>
             <div>
+              <span class="out-of-stock" *ngIf="product.stock == 0">Hết hàng!</span>
               <span>&nbsp;</span>
               <span class="product-sold">Đã bán: &nbsp; <span>{{product.sold}}</span></span>
           </div>
