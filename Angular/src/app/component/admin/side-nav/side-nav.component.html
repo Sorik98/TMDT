@@ -8,7 +8,7 @@
       <div class="col text-right">
         <div class="row" style="align-items: center;
         justify-content: center;">
-        <span class="badge  badge-primary custom-badge">{{userName}}</span><button mat-icon-button color="primary" class="custom-icon-button" [matMenuTriggerFor]="menu"><mat-icon>person</mat-icon></button>
+        <span class="badge  badge-primary custom-badge" matTooltip="{{userName}}">{{userName}}</span><button mat-icon-button color="primary" class="custom-icon-button" [matMenuTriggerFor]="menu"><mat-icon>person</mat-icon></button>
         <mat-menu #menu="matMenu">
             <button mat-menu-item class="no-outline-button" routerLink="/settings">
               <svg class="bi bi-gear-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

@@ -83,6 +83,7 @@ namespace WebApi.Infrastructure.Repositories
                     case OrderStatus.onShipping:
                     order.Status = OrderStatus.Shipped;
                     order.CompleteDate = DateTime.Now;
+                    await OrderComplete(order);
                     break;
 
                 }
@@ -110,6 +111,15 @@ namespace WebApi.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
         
+        private async Task OrderComplete(Order order){
+            foreach (var item in order.OrderDetails)
+            {
+                var product = await _context.Products.Where( p => p.Id == item.ProductId).FirstOrDefaultAsync();
+                product.Sold++;
+                await _context.SaveChangesAsync();
+            }
+        }
+
         public async Task Delete(int id)
         {
             var order = await _context.Orders.Where(o => o.Id == id).FirstOrDefaultAsync();

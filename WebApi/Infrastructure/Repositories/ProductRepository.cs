@@ -64,6 +64,12 @@ namespace WebApi.Infrastructure.Repositories
             _context.Products.Update(product);
             await _context.SaveChangesAsync();
         }
+         public async Task UpdateStock(decimal stock, int id)
+        {
+            var product = await _context.Products.Where(p => p.Id == id).FirstOrDefaultAsync();
+            product.Stock = stock;
+            await _context.SaveChangesAsync();
+        }
         public async Task Delete(int id)
         {
             var product = await GetBy(id);

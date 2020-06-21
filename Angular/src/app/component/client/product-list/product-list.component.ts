@@ -22,7 +22,8 @@ export class ProductListComponent extends ClientComponentBase implements OnInit 
    producers: ProducerDTO[];
    filterInput = {
     producerId: null,
-    name: null
+    name: null,
+    option: null
   };
   ngOnInit(): void {
       console.log(this)
@@ -55,5 +56,16 @@ export class ProductListComponent extends ClientComponentBase implements OnInit 
               var c = (this.filterInput.producerId == null ||  this.filterInput.producerId == undefined) ? true : p.producerId == this.filterInput.producerId
               return b&&c;
                                   });
+  
+  switch(this.filterInput.option)
+  {
+    case 0:
+      this.displayList.sort((a,b)=> a.sold - b.sold)
+      break;
+    case 1:
+      this.displayList.sort((a,b)=> b.sold - a.sold)
+      break;
   }
+  }
+   
 }

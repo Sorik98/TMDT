@@ -28,6 +28,10 @@
           
           <div class="card-body">
             <h3 class="card-title">{{product.name}}</h3>
+            <div>
+            <span style="font-style: italic;margin-bottom: 10px;" *ngIf="product.stock <= 100">Tồn kho: &nbsp;<span class="product-stock">{{product.stock}}</span></span>
+            <span class="product-sold">Đã bán: &nbsp; <span>{{product.sold}}</span></span>
+          </div>
             <div *ngIf="product.sale != 0">
               <div class="card-origin-price">
                 <div class=" text-deleted">{{product.originalPrice | moneyFormatPipe}}</div>
@@ -46,12 +50,14 @@
               <div class="card-curency-unit">VNĐ</div>
           </div>
             </div>
-            <div class="card-text card-short-desc">{{product.shortDesc}}
+            <div class="card-short-desc">{{product.shortDesc}}
             </div>
+            <div style="margin-top: 12px;">
             <input type="number"  [(ngModel)]="Quantity" (change)="quantityChange()">
             <div style="float: right;">
-              <button mat-raised-button color="primary" (click)="addToCart(Quantity)">Thêm vào giỏ hàng</button>
+              <button mat-raised-button color="primary" (click)="addToCart(Quantity)" [disabled]="disableAddToCart()">Thêm vào giỏ hàng</button>
             </div>
+          </div>
           </div>
         </div>
         <!-- /.card -->
@@ -61,7 +67,7 @@
             Description
           </div>
           <div class="card-body">
-            <div class="card-text">{{product.desc}} </div>
+            <div class="card-text">{{product.desc}}</div>
           </div>
         </div>
         <!-- /.card -->

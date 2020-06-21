@@ -1,15 +1,19 @@
 <div class="container">
 
-    <!-- Jumbotron Header -->
-    <header class="jumbotron my-4">
-      <h1 class="display-3">A Warm Welcome!</h1>
-      <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.</p>
-      <a href="#" class="btn btn-primary btn-lg">Call to action!</a>
-    </header>
 
     <!-- Page Features -->
     <div class="row">
-      <div class = "col-md-3 offset-md-3">
+      <div class = "col-md-3 ">
+        <mat-form-field>
+          <mat-label>Tùy chọn</mat-label>
+          <mat-select [(ngModel)]="filterInput.option" >
+            <mat-option [value]="null" >Tất cả </mat-option>
+            <mat-option  [value]="0">Đã bán giảm dần</mat-option>
+            <mat-option  [value]="1">Đã bán tăng dần</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class = "col-md-3 ">
         <mat-form-field>
           <mat-label>Producer</mat-label>
           <mat-select [(ngModel)]="filterInput.producerId" >
@@ -36,6 +40,10 @@
             <h4 class="card-title">
               <a [routerLink]="['/product',product.type,product.id]">{{product.name}}</a>
             </h4>
+            <div>
+              <span>&nbsp;</span>
+              <span class="product-sold">Đã bán: &nbsp; <span>{{product.sold}}</span></span>
+          </div>
             <div *ngIf="product.sale != 0">
               <div class="card-origin-price">
                 <div class=" text-deleted">{{product.originalPrice | moneyFormatPipe}}</div>
@@ -55,7 +63,7 @@
               <div class="card-curency-unit">VNĐ</div>
           </div>
             </div>
-            <div class="card-text card-short-desc">{{product.shortDesc}}
+            <div class="card-short-desc">{{product.shortDesc}}
             </div>
             
           </div>

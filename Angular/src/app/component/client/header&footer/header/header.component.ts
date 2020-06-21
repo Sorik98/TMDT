@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '@shared/service-proxies/services';
-import { RoleConst } from '@shared/const/AppConst';
+import { RoleConst, AppConsts } from '@shared/const/AppConst';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +11,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(private userService: UserService) { }
   user:any = {};
-
+  logoUrl = AppConsts.remoteServiceBaseUrl + "/Other/" + "logo.png";
  // userClaim: any;
  name:string = "sdsd";
   ngOnInit(): void {

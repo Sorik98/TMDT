@@ -194,6 +194,18 @@ display: inline-block;
 }
 .card-short-desc{
     margin-top: 20px;
+    white-space:pre-wrap;
+    max-height: 130px;
+    overflow-y: auto;
+}
+.card-text{
+    white-space:pre-wrap;
+    max-height: 400px;
+    overflow-y: auto;
+}
+.card-title{
+    font-size: 20px !important;
+    font-weight: 500 !important;
 }
 .card-img-top{
     height: 253px;
@@ -309,4 +321,24 @@ display: inline-block;
     max-width: 80px;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+.app-logo{
+    width: 100px;
+    height: 100px;
+    margin-right: 25px;
+}
+.home-new-product{
+    font-size: 22px;
+    font-weight: 500;
+}
+.product-stock{
+    font-weight: 200;
+    font-style: italic;
+    margin-bottom: 10px;
+}
+.product-sold{
+    font-weight: 300;
+    text-align: right;
+    float: right;
+    font-size: 13px;
 }

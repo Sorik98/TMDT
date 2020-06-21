@@ -22,11 +22,14 @@ namespace WebApi.Controllers
     public class CartController : ControllerBase
     {
         private readonly ICartRepository _cartRepo;
+        private readonly IProductRepository _productRepo;
         public CartController(
-                                ICartRepository cartRepo
+                                ICartRepository cartRepo,
+                                IProductRepository productRepo
                                 )
         {
             _cartRepo = cartRepo;
+            _productRepo = productRepo;
         }
 
         [Authorize(Roles = "Admin,Manager,Customer")]
@@ -96,6 +99,12 @@ namespace WebApi.Controllers
         {
            // var user = User.;
            try{
+
+            var stock = (await  _productRepo.GetBy(cartDTO.Product.Id.Value)).Stock;
+            var stock_new = stock - cartDTO.Quantity.Value;
+            if(stock_new < 0)return  Const.Response.ControlerResponse(Const.StatusCode.BadRequest,"Sản phẩm đã hết hàng tồn kho");
+            await _productRepo.UpdateStock(stock_new,cartDTO.Product.Id.Value);
+            
             var cart = cartDTO.ToCart(); 
             await _cartRepo.Create(cart);
             return  Const.Response.ControlerResponse(Const.StatusCode.OK,"Action complete successfully");

@@ -44,4 +44,7 @@ export class ProductDetailComponent extends ClientComponentBase implements OnIni
     else if (this.Quantity < 1)this.Quantity = 1;
     this.product.price = this.Quantity * Math.round(this.product.originalPrice - (this.product.originalPrice*this.product.sale/100));
   }
+  disableAddToCart(){
+    return (this.product.stock - this.Quantity) < 0
+  }
 }

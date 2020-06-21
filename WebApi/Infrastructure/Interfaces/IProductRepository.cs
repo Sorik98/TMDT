@@ -13,5 +13,6 @@ namespace WebApi.Infrastructure.Interfaces
 
        Task Approve(bool isApprove, int id, string user);
        Task<IEnumerable<Product>> GetLatestProducts(int num);
+       Task UpdateStock(decimal stock, int id);
     }
 }
